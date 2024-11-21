@@ -26,6 +26,10 @@ class IntMod:
     def __str__(self):
         return str(self._value)
 
+    def __eq__(self, int_mod):
+        return (self._value == int_mod._value and 
+                self._modulus == int_mod._modulus)
+
 
 def check_int(arg):
     if not isinstance(arg, int):
