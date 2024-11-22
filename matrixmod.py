@@ -1,4 +1,5 @@
 import numpy as np
+import math
 from intmod import IntMod
 from intmod import check_modulus
 
@@ -25,8 +26,15 @@ class MatrixMod(np.ndarray):
         
         return matrix
 
+    def __init__(self, entries=None, modulus=2, size=2):
+        self._modulus = modulus
+        self._size = size    
+
     def __mul__(self, matrix_mod):
-        return self.__matmul__(matrix_mod)
+        product = self.__matmul__(matrix_mod)
+        return MatrixMod(product.entry_values(), 
+                         self._modulus, 
+                         self._size)
 
     def __str__(self):
         return str(self.entry_values()) 
@@ -41,14 +49,17 @@ class MatrixMod(np.ndarray):
 
         return values_array
 
-    def modulus(self):
-        return self[0][0]._modulus
-
     def is_idempotent(self):
         return self * self  == self
 
+    def is_unit(self):
+        if math.gcd(self.det(), self._modulus) == 1:
+            return True
+        else:
+            return False
+
     def det(self):
-        return int(np.linalg.det(self.entry_values())) % self.modulus()
+        return int(np.linalg.det(self.entry_values())) % self._modulus
 
 
 def check_entries(entries, size):

@@ -26,3 +26,10 @@ class MatrixRingMod():
             if matrix.is_idempotent():
                 idems.append(matrix)
         return idems
+
+    def units(self):
+        units = []
+        for matrix in self._elements:
+            if matrix.is_unit():
+                units.append(matrix)
+        return units
