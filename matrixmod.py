@@ -36,6 +36,17 @@ class MatrixMod(np.ndarray):
                          self._modulus, 
                          self._size)
 
+    def __pow__(self, exp):
+        check_exp(exp)        
+
+        identity = np.identity(self._size, dtype=int)
+        iden_matrix = MatrixMod(identity, self._modulus, self._size)
+        product = iden_matrix
+ 
+        for i in range(exp):
+            product = product * self
+        return product
+
     def __str__(self):
         return str(self.entry_values()) 
 
@@ -49,17 +60,18 @@ class MatrixMod(np.ndarray):
 
         return values_array
 
+    def to_tuple(self):
+        return tuple(self.entry_values().flatten())
+
     def is_idempotent(self):
         return self * self  == self
 
-    def is_unit(self):
-        if math.gcd(self.det(), self._modulus) == 1:
-            return True
-        else:
-            return False
 
-    def det(self):
-        return int(np.linalg.det(self.entry_values())) % self._modulus
+def check_exp(exp):
+    if not isinstance(exp, int):
+        raise TypeError('exp should be an int')
+    elif not exp >= 0:
+        raise ValueError('exp should be >= 0')
 
 
 def check_entries(entries, size):
