@@ -1,10 +1,11 @@
 import itertools
 import numpy as np
+from ring import Ring
 from intmod import check_modulus
 from matrixmod import MatrixMod
 
 
-class MatrixRingMod():
+class MatrixRingMod(Ring):
 
     def __init__(self, modulus=2, size=2):
         check_modulus(modulus)
@@ -12,7 +13,8 @@ class MatrixRingMod():
 
         self._modulus = modulus
         self._size = size
-        self._elements = []
+        
+        elements = []
         entry_values = [i for i in range(modulus)]
         entries_list = itertools.product(entry_values, repeat=(size ** 2))
         
@@ -20,29 +22,9 @@ class MatrixRingMod():
             entries = np.array(entries)
             entries.shape = (size, size)
             matrix_mod = MatrixMod(entries, modulus, size)
-            self._elements.append(matrix_mod)
+            elements.append(matrix_mod)
 
-    def is_unit(self, matrix_mod):
-        for matrix in self._elements:
-            if (matrix_mod * matrix == matrix * matrix_mod == 
-                self.identity_matrix()):
-                return True
-
-        return False
-              
-    def idempotents(self):
-        idems = []
-        for matrix in self._elements:
-            if matrix.is_idempotent():
-                idems.append(matrix)
-        return idems
-
-    def units(self):
-        unit_group = []
-        for matrix in self._elements:
-            if self.is_unit(matrix):
-                unit_group.append(matrix)
-        return unit_group
+        super().__init__(elements, MatrixMod)
 
     def identity_matrix(self):
         identity_array = np.identity(self._size, dtype=int)

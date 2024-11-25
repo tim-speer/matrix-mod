@@ -7,7 +7,7 @@ from intmod import check_int_mod
 
 class IntRingMod(Ring):
 
-    def __init__(self, modulus):
+    def __init__(self, modulus=2):
         check_modulus(modulus)
 
         elements = [IntMod(i, modulus) for i in range(modulus)]
