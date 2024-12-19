@@ -4,6 +4,7 @@ class Ring:
         self._elements = elements
         self._element_type = element_type
         self._data = ring_data()
+        self._data['order'] = len(self)
 
         for elem in elements:
             elem._data = ring_element_data()
@@ -13,6 +14,9 @@ class Ring:
             raise TypeError(f'elem needs type {self._element_type}')
        
         return elem in self._elements
+
+    def __len__(self):
+        return len(self._elements)
 
     def __getitem__(self, index):
         return self._elements[index]
@@ -89,8 +93,12 @@ class Ring:
 
     def units(self):
         if self._data['units'] is None:
+            print('Calculating units')
+            total = self._data['order']
+
             unit_list = []
-            for elem in self:
+            for count, elem in enumerate(self, start=1):
+                display_percent(count, total)
                 if self.is_unit(elem):
                     unit_list.append(elem)
 
@@ -101,6 +109,7 @@ class Ring:
 
 def ring_data():
     data = {}
+    data['order'] = None
     data['has_mul_identity'] = None
     data['mul_identity'] = None
     data['is_commutative'] = None
@@ -117,3 +126,11 @@ def ring_element_data():
     data['is_unit'] = None
 
     return data
+
+
+def percent_complete(count, total):
+    return round(100 * count / total, 2)
+
+
+def display_percent(count, total):
+    print(f'\r{percent_complete(count, total):.2f}%', end='') 

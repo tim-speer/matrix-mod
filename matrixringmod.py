@@ -25,6 +25,27 @@ class MatrixRingMod(Ring):
             elements.append(matrix_mod)
 
         super().__init__(elements, MatrixMod)
+        self._data['has_mul_identity'] = True
+        self._data['mul_identity'] = self.identity_matrix()
+
+    def __str__(self):
+        title = f"|{self._size}x{self._size} Matrix Ring over Z_{self._modulus}|" 
+        order = f"\n#Elements: {len(self)}"
+        
+        units = f"\n#Units: "
+        if self._data['units'] is None:
+            units += f'?'
+        else:
+            units += f'{len(self._data["units"])}' 
+        
+        idems = f"\n#Idempotents: "
+        if self._data['idempotents'] is None:
+            idems += f'?'
+        else:
+            idems += f'{len(self._data["idempotents"])}'
+        
+        out = title + order + units + idems
+        return out
 
     def identity_matrix(self):
         identity_array = np.identity(self._size, dtype=int)
