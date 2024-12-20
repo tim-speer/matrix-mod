@@ -3,6 +3,7 @@ import numpy as np
 import math
 
 from ring import Ring
+from ring import display_percent
 from intmod import check_modulus
 from matrixmod import MatrixMod
 
@@ -29,24 +30,21 @@ class MatrixRingMod(Ring):
         super().__init__(elements, MatrixMod)
         self._data['has_mul_identity'] = True
         self._data['mul_identity'] = self.identity_matrix()
-
+        self._data['clean_decomps'] = None
+        self._data['strongly_clean_decomps'] = None
+        self._data['is_clean'] = None
+        self._data['is_strongly_clean'] = None
+ 
     def __str__(self):
-        title = f"|{self._size}x{self._size} Matrix Ring over Z_{self._modulus}|" 
-        order = f"\n#Elements: {len(self)}"
+                   
+        out = f"{self._size}x{self._size} Matrix Ring over Z_{self._modulus}\n"
+        spacing = '-' * len(out) + '\n'
+        out = '\n' + spacing + out + spacing 
+        keys = ['order', 'units', 'idempotents', 'is_clean', 'is_strongly_clean']
         
-        units = f"\n#Units: "
-        if self._data['units'] is None:
-            units += f'?'
-        else:
-            units += f'{len(self._data["units"])}' 
-        
-        idems = f"\n#Idempotents: "
-        if self._data['idempotents'] is None:
-            idems += f'?'
-        else:
-            idems += f'{len(self._data["idempotents"])}'
-        
-        out = title + order + units + idems
+        for key in keys:
+            out += self._data_str(key)
+  
         return out
 
     def _prop_unit(self, elem):
@@ -55,22 +53,67 @@ class MatrixRingMod(Ring):
 
         return False
 
+    def _data_str(self, key):
+        out = ''
+        value = self._data[key]
+        out += f'{key.title().replace('_', ' ')}: '            
+        
+        if value is None:
+            out += '?'
+        elif isinstance(value, list):
+            out += str(len(value))
+        else:
+            out += str(value)
+
+        return out + '\n'
+
     def identity_matrix(self):
         identity_array = np.identity(self._size, dtype=int)
         return MatrixMod(identity_array, self._modulus, self._size)
 
     def clean_decomps(self, strong=False):
-        decomps = {} 
-        idems = self.idempotents()
-        unit_group = self.units()
-        for idem in idems:
-            for unit in unit_group:
-                if not strong:
-                    add_decomp(decomps, idem, unit)
-                elif idem * unit == unit * idem:
-                    add_decomp(decomps, idem, unit)
+        key = ''
+        if strong:
+            key = 'strongly_clean_decomps'
+        else:
+            key = 'clean_decomps'       
 
-        return decomps
+        if ((strong and self._data[key] == None) or
+           (not strong and self._data[key] == None)): 
+            
+            decomps = {} 
+            idems = self.idempotents()
+            unit_group = self.units()
+            total = len(idems) * len(unit_group)
+
+            print(f'Calculating {' '.join(key.split('_'))}')
+
+            count = 1
+            for idem in idems:
+                for unit in unit_group:
+                    display_percent(count, total)
+                    if not strong:
+                        add_decomp(decomps, idem, unit)
+                    elif idem * unit == unit * idem:
+                        add_decomp(decomps, idem, unit)
+                    count += 1
+
+            self._data[key] = decomps
+            print()
+
+        return self._data[key]
+
+    def is_clean(self):
+        if self._data['is_clean'] == None:
+            self._data['is_clean'] = (len(self) == 
+                                      len(self.clean_decomps()))
+        return self._data['is_clean']    
+
+    def is_strongly_clean(self):
+        if self._data['is_strongly_clean'] == None:
+            self._data['is_strongly_clean'] = (len(self) ==
+                                               len(self.clean_decomps(strong=True)))
+        return self._data['is_strongly_clean']
 
     def ntorsion_clean_decomps(self, n, strong=False):
         ntorsion_decomps = {}
@@ -84,8 +127,8 @@ class MatrixRingMod(Ring):
         return ntorsion_decomps
 
     def is_ntorsion_clean(self, n, strong=False):
-        return (len(self._elements) == 
-                len(self.ntorsion_clean_decomps(n, strong=strong)))
+        return(len(self._elements) == 
+               len(self.ntorsion_clean_decomps(n, strong=strong)))
 
 
 def add_decomp(decomps, idem, unit):
