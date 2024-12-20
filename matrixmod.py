@@ -70,6 +70,9 @@ class MatrixMod(np.ndarray):
     def is_idempotent(self):
         return self * self  == self
 
+    def serial(self):
+        return [int(i) for i in self.to_tuple()]
+
 
 def check_exp(exp):
     if not isinstance(exp, int):

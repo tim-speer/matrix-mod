@@ -1,6 +1,9 @@
 import itertools
 import numpy as np
 import math
+import json
+
+from pathlib import Path
 
 from ring import Ring
 from ring import display_percent
@@ -72,6 +75,16 @@ class MatrixRingMod(Ring):
 
         return out + '\n'
 
+    def idempotents(self):
+        idems = super().idempotents()
+        self._save_data('idempotents')
+        return idems
+
+    def units(self):
+        unit_group = super().units()
+        self._save_data('units')
+        return unit_group
+
     def identity_matrix(self):
         identity_array = np.identity(self._size, dtype=int)
         return MatrixMod(identity_array, self._modulus, self._size)
@@ -104,7 +117,7 @@ class MatrixRingMod(Ring):
                     count += 1
 
             self._data[key] = decomps
-            
+            self._save_data(key)            
             print()
 
         return self._data[key]
@@ -174,10 +187,38 @@ class MatrixRingMod(Ring):
     def strongly_ntorsiont_clean_search(self):
         pass
 
+    def _save_data(self, key):
+        path = Path(f'./data/{self._modulus}-{self._size}')
+        file_name = Path(str(path) + '/' + key + '.json')
+
+        if not path.exists():
+            path.mkdir(parents=True)        
+
+        if key in ['idempotents', 'units']:
+            self._save_matrix_list(key, file_name)
+        elif key in ['clean_decomps', 'strongly_clean_decomps']:
+            self._save_decomp_dict(key, file_name)
+
+    def _save_matrix_list(self, key, file_name):
+        with open(file_name, 'w') as data_file:
+            json.dump(self._data[key], data_file, default=MatrixMod.serial)
+
+    def _save_decomp_dict(self, key, file_name):
+        with open(file_name, 'w') as data_file:
+            decomps = list(self._data[key].items())
+            json.dump(decomps, data_file, default=serial_decomps)
+
+
+def serial_decomps(obj):
+    if isinstance(obj, np.int64):
+        return int(obj)
+    elif isinstance(obj, MatrixMod):
+        return obj.serial()
+
+
 def add_decomp(decomps, idem, unit):
     decomp = idem + unit
     try:
         decomps[decomp.to_tuple()].append((idem, unit))
     except KeyError:
         decomps[decomp.to_tuple()] = [(idem, unit)]                 
-
