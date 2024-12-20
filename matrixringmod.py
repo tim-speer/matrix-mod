@@ -1,5 +1,7 @@
 import itertools
 import numpy as np
+import math
+
 from ring import Ring
 from intmod import check_modulus
 from matrixmod import MatrixMod
@@ -46,6 +48,12 @@ class MatrixRingMod(Ring):
         
         out = title + order + units + idems
         return out
+
+    def _prop_unit(self, elem):
+        if math.gcd(self._modulus, elem.det()) == 1:
+            return True
+
+        return False
 
     def identity_matrix(self):
         identity_array = np.identity(self._size, dtype=int)

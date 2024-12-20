@@ -82,13 +82,18 @@ class Ring:
 
     def idempotents(self):
         if self._data['idempotents'] is None:
+            print('Calculating idempotents')
+            total = self._data['order']
+
             idems = []
-            for elem in self:
+            for count, elem in enumerate(self, start=1):
+                display_percent(count, total)
                 if self.is_idempotent(elem):
                     idems.append(elem)
 
             self._data['idempotents'] = idems
-        
+            print()
+         
         return self._data['idempotents']
 
     def units(self):
@@ -103,6 +108,7 @@ class Ring:
                     unit_list.append(elem)
 
             self._data['units'] = unit_list
+            print()
 
         return self._data['units']
 

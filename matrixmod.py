@@ -60,6 +60,10 @@ class MatrixMod(np.ndarray):
 
         return values_array
 
+    def det(self):
+        fast_det = np.linalg.det(self.entry_values())
+        return round(fast_det) % self._modulus 
+
     def to_tuple(self):
         return tuple(self.entry_values().flatten())
 
