@@ -34,13 +34,18 @@ class MatrixRingMod(Ring):
         self._data['strongly_clean_decomps'] = None
         self._data['is_clean'] = None
         self._data['is_strongly_clean'] = None
- 
+        self._data['ntorsion_clean_decomps'] = {}
+        self._data['strongly_ntorsion_clean_decomps'] = {}
+        self._data['is_ntorsion_clean'] = {} 
+        self._data['is_strongly_ntorsion_clean'] = {}
+
     def __str__(self):
                    
         out = f"{self._size}x{self._size} Matrix Ring over Z_{self._modulus}\n"
         spacing = '-' * len(out) + '\n'
         out = '\n' + spacing + out + spacing 
-        keys = ['order', 'units', 'idempotents', 'is_clean', 'is_strongly_clean']
+        keys = ['order', 'units', 'idempotents', 'is_clean', 'is_strongly_clean',
+                'is_ntorsion_clean', 'is_strongly_ntorsion_clean']
         
         for key in keys:
             out += self._data_str(key)
@@ -99,6 +104,7 @@ class MatrixRingMod(Ring):
                     count += 1
 
             self._data[key] = decomps
+            
             print()
 
         return self._data[key]
@@ -116,20 +122,57 @@ class MatrixRingMod(Ring):
         return self._data['is_strongly_clean']
 
     def ntorsion_clean_decomps(self, n, strong=False):
-        ntorsion_decomps = {}
-        for key, decomps in self.clean_decomps(strong=strong).items():
-            for decomp in decomps:
-                if decomp[1] ** n == self.identity_matrix():
-                    add_decomp(ntorsion_decomps, 
-                               decomp[0], 
-                               decomp[1])          
+        data_key = ''
+        if strong:
+            data_key = 'strongly_ntorsion_clean_decomps'
+            if self._data['is_strongly_clean'] is None:
+                self.is_strongly_clean()
+        else:
+            data_key = 'ntorsion_clean_decomps'
+            if self._data['is_clean'] is None:
+                self.is_clean() 
+        
+        if not n in self._data[data_key]:
 
-        return ntorsion_decomps
+            ntorsion_decomps = {}
+            clean_decomps = self.clean_decomps(strong=strong)
+            total = sum([len(clean_decomps[key]) for key in clean_decomps])            
 
-    def is_ntorsion_clean(self, n, strong=False):
-        return(len(self._elements) == 
-               len(self.ntorsion_clean_decomps(n, strong=strong)))
+            print(f'Calculating {' '.join(data_key.split('_'))}')
+            
+            count = 1
+            for key, decomps in clean_decomps.items():
+                for decomp in decomps:
+                    display_percent(count, total)
+                    if decomp[1] ** n == self.identity_matrix():
+                        add_decomp(ntorsion_decomps, 
+                                   decomp[0], 
+                                   decomp[1])          
+                    count += 1
 
+            self._data[data_key][n] = ntorsion_decomps
+
+            print()
+
+        return self._data[data_key][n]
+
+    def is_ntorsion_clean(self, n):
+        if not n in self._data['is_ntorsion_clean']:
+            self._data['is_ntorsion_clean'][n] = (len(self._elements) == 
+                                                  len(self.ntorsion_clean_decomps(n)))
+        return self._data['is_ntorsion_clean'][n]
+
+    def is_strongly_ntorsion_clean(self, n):
+        if not n in self._data['is_strongly_ntorsion_clean']:
+            self._data['is_strongly_ntorsion_clean'][n] = (len(self._elements) ==
+                                    len(self.ntorsion_clean_decomps(n, strong=True)))
+        return self._data['is_strongly_ntorsion_clean'][n]
+
+    def ntorsion_clean_search(self):
+        pass
+
+    def strongly_ntorsiont_clean_search(self):
+        pass
 
 def add_decomp(decomps, idem, unit):
     decomp = idem + unit
