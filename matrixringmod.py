@@ -126,12 +126,17 @@ class MatrixRingMod(Ring):
         if self._data['is_clean'] == None:
             self._data['is_clean'] = (len(self) == 
                                       len(self.clean_decomps()))
+
+            self._save_data('is_clean')
+
         return self._data['is_clean']    
 
     def is_strongly_clean(self):
         if self._data['is_strongly_clean'] == None:
             self._data['is_strongly_clean'] = (len(self) ==
                                                len(self.clean_decomps(strong=True)))
+            self._save_data('is_strongly_clean')
+
         return self._data['is_strongly_clean']
 
     def ntorsion_clean_decomps(self, n, strong=False):
@@ -164,7 +169,8 @@ class MatrixRingMod(Ring):
                     count += 1
 
             self._data[data_key][n] = ntorsion_decomps
-
+            self._save_data(data_key)
+            
             print()
 
         return self._data[data_key][n]
@@ -173,12 +179,16 @@ class MatrixRingMod(Ring):
         if not n in self._data['is_ntorsion_clean']:
             self._data['is_ntorsion_clean'][n] = (len(self._elements) == 
                                                   len(self.ntorsion_clean_decomps(n)))
+            self._save_data('is_ntorsion_clean')
+
         return self._data['is_ntorsion_clean'][n]
 
     def is_strongly_ntorsion_clean(self, n):
         if not n in self._data['is_strongly_ntorsion_clean']:
             self._data['is_strongly_ntorsion_clean'][n] = (len(self._elements) ==
                                     len(self.ntorsion_clean_decomps(n, strong=True)))
+            self._save_data('is_strongly_ntorsion_clean')
+
         return self._data['is_strongly_ntorsion_clean'][n]
 
     def ntorsion_clean_search(self):
@@ -198,7 +208,20 @@ class MatrixRingMod(Ring):
             self._save_matrix_list(key, file_name)
         elif key in ['clean_decomps', 'strongly_clean_decomps']:
             self._save_decomp_dict(key, file_name)
+        elif key in ['is_ntorsion_clean', 'is_strongly_ntorsion_clean', 
+                     'is_clean', 'is_strongly_clean']:
+            self._save_bool_dict(key, file_name)
+        elif key in ['ntorsion_clean_decomps', 
+                     'strongly_ntorsion_clean_decomps']:
+            path = Path(f'./data/{self._modulus}-{self._size}/{key}')
 
+            if not path.exists():
+                path.mkdir(parents=True)
+
+            for num in self._data[key]:
+                file_name = Path(str(path) + '/' + str(num) + '.json')
+                self._save_ntorsion_decomp_dict(key, num, file_name) 
+           
     def _save_matrix_list(self, key, file_name):
         with open(file_name, 'w') as data_file:
             json.dump(self._data[key], data_file, default=MatrixMod.serial)
@@ -207,6 +230,15 @@ class MatrixRingMod(Ring):
         with open(file_name, 'w') as data_file:
             decomps = list(self._data[key].items())
             json.dump(decomps, data_file, default=serial_decomps)
+
+    def _save_bool_dict(self, key, file_name):
+        with open(file_name, 'w') as data_file:
+            json.dump(self._data[key], data_file)
+
+    def _save_ntorsion_decomp_dict(self, key, num, file_name):
+        with open(file_name, 'w') as data_file:
+            decomps = list(self._data[key][num].items())
+            json.dump(decomps, data_file, default=serial_decomps)        
 
 
 def serial_decomps(obj):
