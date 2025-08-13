@@ -1,10 +1,9 @@
-#include <math.h>
+#include "matrixmod.h"
 
-unsigned int num_matrices(unsigned int size, unsigned int modulus) {
-  return pow(modulus, size * size);
-}
-
-unsigned int * gen_matrices(unsigned int size, unsigned int modulus) {
-  unsigned int * matrices; 
-  return matrices;
+MatrixMod create_matrix(const unsigned int size, 
+                        const unsigned int modulus, 
+                        unsigned int entries[size * size]) {
+  
+  MatrixMod matrix = { size, modulus, entries }; 
+  return matrix;
 }
