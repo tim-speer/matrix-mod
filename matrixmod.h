@@ -11,4 +11,6 @@ MatrixMod create_matrix(const unsigned int size,
                         const unsigned int modulus, 
                         unsigned int entries[size * size]);
 
+unsigned int num_matrices(unsigned int size, unsigned int modulus);
+
 #endif
