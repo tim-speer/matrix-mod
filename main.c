@@ -4,9 +4,13 @@
 
 int main(void) {
 
-  unsigned int entries[4] = {1, 0, 0, 1};
-  MatrixMod m = create_matrix(2, 2, entries);
-  printf("Entry (1, 1) = %u", get_matrix_entry(m, 1, 1));
+  unsigned int entries[9] = {1, 0, 0, 0, 1, 0, 0, 0, 1};
+  MatrixMod m = create_matrix(3, 2, entries);
+  printf("Row 2\n");
+  unsigned int *row = get_matrix_row(m, 2);
+  for (unsigned int i = 0; i < m.size; i++) {
+    printf("%u ", *(row + i));
+  }
 
   return EXIT_SUCCESS;
 

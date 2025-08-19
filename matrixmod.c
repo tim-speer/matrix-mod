@@ -18,3 +18,7 @@ unsigned int get_matrix_entry(MatrixMod matrix,
                               unsigned int column) {
   return *(matrix.entries + row * matrix.size + column);
 }
+
+unsigned int *get_matrix_row(MatrixMod matrix, unsigned int row) {
+  return matrix.entries + row * matrix.size;
+}
