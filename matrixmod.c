@@ -10,5 +10,11 @@ MatrixMod create_matrix(const unsigned int size,
 }
 
 unsigned int num_matrices(unsigned int size, unsigned int modulus) {
-  return pow(modulus, size * size); 
+  return (unsigned int)pow(modulus, size * size); 
+}
+
+unsigned int get_matrix_entry(MatrixMod matrix, 
+                              unsigned int row, 
+                              unsigned int column) {
+  return *(matrix.entries + row * matrix.size + column);
 }
