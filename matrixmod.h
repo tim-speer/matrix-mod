@@ -3,13 +3,13 @@
 
 typedef struct { 
                  const unsigned int rows;
-		 const unsigned int columns; 
+                 const unsigned int columns; 
                  const unsigned int modulus; 
                  unsigned int *entries;
                } MatrixMod;
 
 MatrixMod create_matrix(const unsigned int rows,
-			const unsigned int columns, 
+                        const unsigned int columns, 
                         const unsigned int modulus, 
                         unsigned int entries[rows * columns]);
 unsigned int num_matrices(unsigned int rows, 

@@ -2,7 +2,7 @@
 #include "matrixmod.h"
 
 MatrixMod create_matrix(const unsigned int rows,
-			const unsigned int columns, 
+                        const unsigned int columns, 
                         const unsigned int modulus, 
                         unsigned int entries[rows * columns]) {
   MatrixMod matrix = { rows, columns, modulus, entries }; 
@@ -10,8 +10,8 @@ MatrixMod create_matrix(const unsigned int rows,
 }
 
 unsigned int num_matrices(unsigned int rows, 
-			  unsigned int columns, 
-			  unsigned int modulus) {
+                          unsigned int columns, 
+                          unsigned int modulus) {
   return (unsigned int)pow(modulus, rows * columns); 
 }
 
