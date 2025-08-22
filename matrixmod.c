@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "matrixmod.h"
+#include "checks.h"
 
 unsigned int *__alloc_matrix(unsigned int rows, unsigned int columns) {
   unsigned int size = rows * columns;
@@ -50,6 +51,7 @@ unsigned int *entry_address(MatrixMod matrix,
 }
 
 MatrixMod get_matrix_row(MatrixMod matrix, unsigned int row) {
+  check_matrix_row(matrix, row);
   unsigned int *row_p = entry_address(matrix, row, 1); 
   return create_matrix(1, matrix.columns, matrix.modulus, row_p);
 }

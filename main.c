@@ -18,6 +18,7 @@ int main(void) {
   MatrixMod new_row = get_matrix_row(m, 1);
   print_matrix_info(new_row);
 
+  free_matrix(&new_row);
   free_matrix(&m);
   free_matrix(&row);
 

@@ -1,0 +1,8 @@
+#ifndef CHECKS_H
+#define CHECKS_H
+
+#include "matrixmod.h"
+
+void check_matrix_row(MatrixMod matrix, unsigned int row);
+
+#endif
