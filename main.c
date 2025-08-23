@@ -15,10 +15,8 @@ int main(void) {
   print_matrix_info(m);
   print_matrix_info(row);
 
-  MatrixMod new_row = get_matrix_row(m, 1);
-  print_matrix_info(new_row);
+  printf("\n%u\n", get_matrix_entry(m, 3, 2));
 
-  free_matrix(&new_row);
   free_matrix(&m);
   free_matrix(&row);
 

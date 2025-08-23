@@ -47,6 +47,7 @@ unsigned int num_matrices(unsigned int rows,
 unsigned int *entry_address(MatrixMod matrix,
                             unsigned int row,
                             unsigned int column) {
+  check_matrix_dim(matrix, row, column);
   return matrix.entries + (row - 1) * matrix.columns + (column - 1);
 }
 
