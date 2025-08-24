@@ -5,6 +5,9 @@
 #include "checks.h"
 
 unsigned int *__alloc_matrix(unsigned int rows, unsigned int columns) {
+  check_positive(rows);
+  check_positive(columns);
+
   unsigned int size = rows * columns;
   unsigned int *entries = calloc(size, sizeof(unsigned int)); 
 

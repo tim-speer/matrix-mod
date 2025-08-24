@@ -8,5 +8,5 @@ void check_matrix_column(MatrixMod matrix, unsigned int column);
 void check_matrix_dim(MatrixMod matrix,
                       unsigned int row,
                       unsigned int column);
-
+void check_positive(unsigned int num);
 #endif

@@ -22,3 +22,10 @@ void check_matrix_dim(MatrixMod matrix,
   check_matrix_row(matrix, row);
   check_matrix_column(matrix, column);
 }
+
+void check_positive(unsigned int num) {
+  if (num == 0) {
+    printf("Error: Need a positive integer");
+    exit(EXIT_FAILURE);
+  }
+}
