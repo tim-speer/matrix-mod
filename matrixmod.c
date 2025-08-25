@@ -22,6 +22,7 @@ unsigned int *__alloc_matrix(unsigned int rows, unsigned int columns) {
 MatrixMod create_zero_matrix(unsigned int rows,
                              unsigned int columns,      
                              unsigned int modulus) {
+  check_modulus(modulus);
   unsigned int *entries = __alloc_matrix(rows, columns);
   MatrixMod matrix = { rows, columns, modulus, entries };
   return matrix;

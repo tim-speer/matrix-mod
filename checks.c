@@ -29,3 +29,10 @@ void check_positive(unsigned int num) {
     exit(EXIT_FAILURE);
   }
 }
+
+void check_modulus(unsigned int modulus) {
+  if (modulus < 2) {
+    printf("Error: Modulus should be >= 2");
+    exit(EXIT_FAILURE);
+  }
+}
