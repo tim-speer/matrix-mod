@@ -17,6 +17,9 @@ int main(void) {
 
   printf("\n%u\n", get_matrix_entry(m, 3, 2));
 
+  unsigned int n = num_matrices(2, 2, 4);
+  printf("num matrics = %u", n);
+
   free_matrix(&m);
   free_matrix(&row);
 

@@ -10,5 +10,8 @@ void check_matrix_dim(MatrixMod matrix,
                       unsigned int column);
 void check_positive(unsigned int num);
 void check_modulus(unsigned int modulus);
+void check_matrix_params(unsigned int rows,
+                         unsigned int columns,
+                         unsigned int modulus);
 
 #endif

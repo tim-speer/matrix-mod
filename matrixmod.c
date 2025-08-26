@@ -45,6 +45,7 @@ void free_matrix(MatrixMod *matrix) {
 unsigned int num_matrices(unsigned int rows, 
                           unsigned int columns, 
                           unsigned int modulus) {
+  check_matrix_params(rows, columns, modulus);
   return (unsigned int)pow(modulus, rows * columns); 
 }
 

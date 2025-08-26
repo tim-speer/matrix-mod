@@ -36,3 +36,11 @@ void check_modulus(unsigned int modulus) {
     exit(EXIT_FAILURE);
   }
 }
+
+void check_matrix_params(unsigned int rows, 
+                         unsigned int columns,
+                         unsigned int modulus) {
+  check_positive(rows);
+  check_positive(columns);
+  check_modulus(modulus);
+}
