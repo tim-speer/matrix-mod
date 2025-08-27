@@ -9,16 +9,11 @@ int main(void) {
   MatrixMod row = get_matrix_row(m, 1);
 
   print_matrix_info(m);
-  print_matrix_info(row);
-
   set_matrix_entry(m, 1, 2, 5);
+  set_matrix_entry(m, 1, 1, 10);
+  reduce_matrix_entry(m, 1, 1);
+  reduce_matrix_entry(m, 1, 2);
   print_matrix_info(m);
-  print_matrix_info(row);
-
-  printf("\n%u\n", get_matrix_entry(m, 3, 2));
-
-  unsigned int n = num_matrices(2, 2, 4);
-  printf("num matrics = %u", n);
 
   free_matrix(&m);
   free_matrix(&row);

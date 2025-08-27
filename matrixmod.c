@@ -57,7 +57,6 @@ unsigned int *entry_address(MatrixMod matrix,
 }
 
 MatrixMod get_matrix_row(MatrixMod matrix, unsigned int row) {
-  check_matrix_row(matrix, row);
   unsigned int *row_p = entry_address(matrix, row, 1); 
   return create_matrix(1, matrix.columns, matrix.modulus, row_p);
 }
@@ -105,3 +104,9 @@ void print_matrix_info(MatrixMod matrix) {
   print_matrix(matrix);
 }
 
+void reduce_matrix_entry(MatrixMod matrix, 
+                         unsigned int row, 
+                         unsigned int column) {
+  unsigned int *entry_p = entry_address(matrix, row, column);
+  *(entry_p) = (*(entry_p)) % matrix.modulus;
+}
