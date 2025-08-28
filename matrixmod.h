@@ -16,6 +16,7 @@ MatrixMod create_matrix(unsigned int rows,
                          unsigned int modulus,
                          unsigned int entries[rows * columns]);
 void free_matrix(MatrixMod *matrix);
+unsigned int matrix_size(MatrixMod matrix);
 unsigned int num_matrices(unsigned int rows, 
                           unsigned int columns, 
                           unsigned int modulus);
@@ -38,5 +39,6 @@ void print_matrix_info(MatrixMod matrix);
 void reduce_matrix_entry(MatrixMod matrix,
                          unsigned int row,
                          unsigned int column);
+void reduce_matrix(MatrixMod matrix);
 
 #endif

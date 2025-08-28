@@ -42,6 +42,10 @@ void free_matrix(MatrixMod *matrix) {
   matrix->entries = NULL;
 }
 
+unsigned int matrix_size(MatrixMod matrix) {
+  return matrix.rows * matrix.columns;
+}
+
 unsigned int num_matrices(unsigned int rows, 
                           unsigned int columns, 
                           unsigned int modulus) {
@@ -87,7 +91,7 @@ void set_matrix_entries(MatrixMod matrix,
 }
 
 void print_matrix(MatrixMod matrix) {
-  for (unsigned int i = 0; i < (matrix.rows * matrix.columns); i++) {
+  for (unsigned int i = 0; i < matrix_size(matrix); i++) {
     printf("%u", *(matrix.entries + i));
     if ((i + 1) % matrix.columns == 0) {
       printf("\n");
@@ -109,4 +113,12 @@ void reduce_matrix_entry(MatrixMod matrix,
                          unsigned int column) {
   unsigned int *entry_p = entry_address(matrix, row, column);
   *(entry_p) = (*(entry_p)) % matrix.modulus;
+}
+
+void reduce_matrix(MatrixMod matrix) {
+  for (unsigned int i = 0; i < matrix_size(matrix); i++) {
+    unsigned int row = i / matrix.columns + 1;
+    unsigned int column = i % matrix.columns + 1;
+    reduce_matrix_entry(matrix, row, column);
+  }
 }
