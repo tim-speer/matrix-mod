@@ -12,9 +12,13 @@ MatrixMod create_zero_matrix(unsigned int rows,
                              unsigned int columns,
                              unsigned int modulus);
 MatrixMod create_matrix(unsigned int rows,
-                         unsigned int columns,
-                         unsigned int modulus,
-                         unsigned int entries[rows * columns]);
+                        unsigned int columns,
+                        unsigned int modulus,
+                        unsigned int entries[rows * columns]);
+MatrixMod create_reduced_matrix(unsigned int rows,
+                                unsigned int columns,
+                                unsigned int modulus,
+                                unsigned int entries[rows * columns]);
 void free_matrix(MatrixMod *matrix);
 unsigned int matrix_size(MatrixMod matrix);
 unsigned int num_matrices(unsigned int rows, 
