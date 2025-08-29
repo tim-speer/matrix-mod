@@ -44,5 +44,6 @@ void reduce_matrix_entry(MatrixMod matrix,
                          unsigned int row,
                          unsigned int column);
 void reduce_matrix(MatrixMod matrix);
+unsigned int inner_product(MatrixMod row, MatrixMod column);
 
 #endif

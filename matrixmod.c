@@ -142,3 +142,13 @@ void reduce_matrix(MatrixMod matrix) {
     reduce_matrix_entry(matrix, row, column);
   }
 }
+
+unsigned int inner_product(MatrixMod row, MatrixMod column) {
+  unsigned int product = 0;
+  for (unsigned int i = 1; i <= row.columns; i++) {
+    product += get_matrix_entry(row, 1, i) * 
+               get_matrix_entry(column, i, 1);
+  }
+
+  return product;  
+}
