@@ -74,6 +74,17 @@ MatrixMod get_matrix_row(MatrixMod matrix, unsigned int row) {
   return create_matrix(1, matrix.columns, matrix.modulus, row_p);
 }
 
+MatrixMod get_matrix_column(MatrixMod matrix, unsigned int column){
+  MatrixMod new_column = create_zero_matrix(matrix.rows, 1, matrix.modulus);
+  for (unsigned int i = 1; i <= matrix.rows; i++) {
+    unsigned int value = get_matrix_entry(matrix, i, column);
+    set_matrix_entry(new_column, i, 1, value);     
+  }
+
+  return new_column;
+
+}
+
 unsigned int get_matrix_entry(MatrixMod matrix, 
                               unsigned int row, 
                               unsigned int column) {
