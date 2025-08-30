@@ -152,3 +152,22 @@ unsigned int inner_product(MatrixMod row, MatrixMod column) {
 
   return product;  
 }
+
+MatrixMod multiply_matrices(MatrixMod left, MatrixMod right) {
+  check_multiply_dim(left, right);
+  MatrixMod product = create_zero_matrix(left.rows, 
+                                         right.columns, 
+                                         left.modulus);
+
+  for (unsigned int i = 1; i <= left.rows; i++) {
+    MatrixMod row = get_matrix_row(left, i);
+    for (unsigned int j = 1; j <= right.columns; j++) {
+      MatrixMod column = get_matrix_column(right, j);
+      set_matrix_entry(product, i, j, inner_product(row, column));
+      free_matrix(&column);
+    }
+    free_matrix(&row);
+  }
+
+  return product;
+}

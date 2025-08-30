@@ -13,5 +13,6 @@ void check_modulus(unsigned int modulus);
 void check_matrix_params(unsigned int rows,
                          unsigned int columns,
                          unsigned int modulus);
+void check_multiply_dim(MatrixMod left, MatrixMod right);
 
 #endif

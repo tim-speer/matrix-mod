@@ -44,3 +44,10 @@ void check_matrix_params(unsigned int rows,
   check_positive(columns);
   check_modulus(modulus);
 }
+
+void check_multiply_dim(MatrixMod left, MatrixMod right) {
+  if (left.columns != right.rows) {
+    printf("Error: Invalid dimensions for matrix multiplication");
+    exit(EXIT_FAILURE);
+  }
+}
