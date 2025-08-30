@@ -171,3 +171,13 @@ MatrixMod multiply_matrices(MatrixMod left, MatrixMod right) {
 
   return product;
 }
+
+MatrixMod square_matrix(MatrixMod matrix) {
+  return multiply_matrices(matrix, matrix);
+}
+
+MatrixMod reduce_multiply_matrices(MatrixMod left, MatrixMod right) {
+  MatrixMod product = multiply_matrices(left, right);
+  reduce_matrix(product);
+  return product;
+}

@@ -46,5 +46,7 @@ void reduce_matrix_entry(MatrixMod matrix,
 void reduce_matrix(MatrixMod matrix);
 unsigned int inner_product(MatrixMod row, MatrixMod column);
 MatrixMod multiply_matrices(MatrixMod left, MatrixMod right);
+MatrixMod square_matrix(MatrixMod matrix);
+MatrixMod reduce_multiply_matrices(MatrixMod left, MatrixMod right);
 
 #endif
