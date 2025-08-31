@@ -55,6 +55,14 @@ unsigned int matrix_size(MatrixMod matrix) {
   return matrix.rows * matrix.columns;
 }
 
+/*************************************************************
+Returns the number of matrices with dimensions rows by columns 
+with entries from the ring of integers mod the parameter 
+modulus. This number is given by the formula:
+
+number of matrices = modulus ^ (rows * columns) 
+ 
+*************************************************************/
 unsigned int num_matrices(unsigned int rows, 
                           unsigned int columns, 
                           unsigned int modulus) {
