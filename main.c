@@ -22,7 +22,7 @@ int main(void) {
   free_matrix(&m);
   free_matrix(&n);
 
-  printf("\n\n%u", num_entries(4, 3));
+  printf("\n\n%u", num_matrices(3, 3, 4));
 
   return EXIT_SUCCESS;
 

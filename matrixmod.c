@@ -67,7 +67,12 @@ unsigned int num_matrices(unsigned int rows,
                           unsigned int columns, 
                           unsigned int modulus) {
   check_matrix_params(rows, columns, modulus);
-  return (unsigned int)pow(modulus, rows * columns); 
+  unsigned int num = 1;
+  for (unsigned int i = 1; i <= num_entries(rows, columns); i++) {
+    num *= modulus;
+  }
+
+  return num;
 }
 
 unsigned int num_entries(unsigned int rows,
