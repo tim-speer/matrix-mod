@@ -218,3 +218,26 @@ unsigned int largest_digit_position(unsigned int value,
 
   return position;
 }
+
+unsigned int __power(unsigned int modulus, unsigned int exp) {
+  unsigned int power = 1;
+  for (unsigned int i = 1; i <= exp; i++) {
+    power *= modulus;
+  }
+
+  return power;
+}
+
+unsigned int calc_digit(unsigned int value, unsigned int modulus) {
+  unsigned int num = value;
+  unsigned int position = largest_digit_position(value, modulus);
+  unsigned int power = __power(modulus, position);
+  unsigned int digit = 0;
+
+  while (num >= power) {
+    num -= power;
+    digit++;      
+  }
+
+  return digit;
+}

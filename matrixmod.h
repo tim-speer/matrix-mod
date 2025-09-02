@@ -51,5 +51,6 @@ MatrixMod square_matrix(MatrixMod matrix);
 MatrixMod reduce_multiply_matrices(MatrixMod left, MatrixMod right);
 unsigned int largest_digit_position(unsigned int value,
                                     unsigned int modulus);
+unsigned int calc_digit(unsigned int value, unsigned int modulus);
 
 #endif
