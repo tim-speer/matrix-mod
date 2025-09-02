@@ -134,6 +134,11 @@ void set_matrix_entries(MatrixMod matrix,
 }
 
 void print_matrix(MatrixMod matrix) {
+  if (!matrix.entries) {
+    printf("Error: Trying to print a matrix will NULL entries");
+    exit(EXIT_FAILURE);
+  }
+  
   for (unsigned int i = 0; i < matrix_size(matrix); i++) {
     printf("%u", *(matrix.entries + i));
     if ((i + 1) % matrix.columns == 0) {

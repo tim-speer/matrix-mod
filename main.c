@@ -13,5 +13,7 @@ int main(void) {
     free_matrix(&matrices[i]);
   }
 
+  print_matrix_info(matrices[0]);
+
   return EXIT_SUCCESS;
 }
