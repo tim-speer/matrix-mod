@@ -2,9 +2,9 @@
 #define MATRIX_MOD_H
 
 typedef struct { 
-                 const unsigned int rows;
-                 const unsigned int columns; 
-                 const unsigned int modulus; 
+                 unsigned int rows;
+                 unsigned int columns; 
+                 unsigned int modulus; 
                  unsigned int *entries;
                } MatrixMod;
 
@@ -49,8 +49,12 @@ unsigned int inner_product(MatrixMod row, MatrixMod column);
 MatrixMod multiply_matrices(MatrixMod left, MatrixMod right);
 MatrixMod square_matrix(MatrixMod matrix);
 MatrixMod reduce_multiply_matrices(MatrixMod left, MatrixMod right);
-unsigned int largest_digit_position(unsigned int value,
-                                    unsigned int modulus);
-unsigned int calc_digit(unsigned int value, unsigned int modulus);
+unsigned int calc_digit(unsigned int modulus,
+                        unsigned int position,
+                        unsigned int value);
+MatrixMod gen_matrix(unsigned int rows,
+                     unsigned int columns,
+                     unsigned int modulus,
+                     unsigned int value);
 
 #endif

@@ -4,26 +4,14 @@
 
 int main(void) {
 
-  unsigned int entries_m[4] = {10, 9, 0, 1};
-  unsigned int entries_n[6] = {1, 1, 0, 0, 1, 1};
-  MatrixMod m = create_matrix(2, 2, 5, entries_m);
-  MatrixMod n = create_matrix(2, 3, 5, entries_n);
-  MatrixMod p = multiply_matrices(m, n);
-  MatrixMod p_red = reduce_multiply_matrices(m, n);
- 
-  print_matrix_info(m);
-  print_matrix_info(n);
-  print_matrix_info(p);
-  print_matrix_info(p_red);
-  print_matrix_info(square_matrix(m));
+  unsigned int num = num_matrices(2, 2, 3);
+  MatrixMod *matrices;
 
-  free_matrix(&p);
-  free_matrix(&p_red);
-  free_matrix(&m);
-  free_matrix(&n);
-
-  printf("\n\n%u", calc_digit(26, 3));
+  for (unsigned int i = 0; i < num; i++) {
+    matrices[i] = gen_matrix(2, 2, 3, i);
+    print_matrix_info(matrices[i]);
+    free_matrix(&matrices[i]);
+  }
 
   return EXIT_SUCCESS;
-
 }

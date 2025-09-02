@@ -205,21 +205,8 @@ MatrixMod reduce_multiply_matrices(MatrixMod left, MatrixMod right) {
   return product;
 }
 
-unsigned int largest_digit_position(unsigned int value, 
-                                    unsigned int modulus) {
-  check_modulus(modulus);
-  unsigned int position = 0;
-  unsigned int power = modulus;
-
-  while (value >= power) {
-    position += 1;
-    power *= modulus;
-  }
-
-  return position;
-}
-
-unsigned int __power(unsigned int modulus, unsigned int exp) {
+unsigned int __power(unsigned int modulus, 
+                     unsigned int exp) {
   unsigned int power = 1;
   for (unsigned int i = 1; i <= exp; i++) {
     power *= modulus;
@@ -228,16 +215,35 @@ unsigned int __power(unsigned int modulus, unsigned int exp) {
   return power;
 }
 
-unsigned int calc_digit(unsigned int value, unsigned int modulus) {
-  unsigned int num = value;
-  unsigned int position = largest_digit_position(value, modulus);
+unsigned int calc_digit(unsigned int modulus,
+                        unsigned int position,
+                        unsigned int value) {
   unsigned int power = __power(modulus, position);
   unsigned int digit = 0;
 
-  while (num >= power) {
-    num -= power;
+  while (value >= power) {
+    value -= power;
     digit++;      
   }
 
   return digit;
+}
+
+MatrixMod gen_matrix(unsigned int rows,
+                     unsigned int columns,
+                     unsigned int modulus,
+                     unsigned int value) {
+  MatrixMod matrix = create_zero_matrix(rows, columns, modulus);
+  unsigned int num = num_entries(rows, columns);
+  unsigned int digit = 0;  
+  unsigned int position = num - 1;
+
+  for (unsigned int i = 0; i < num; i++) {
+    digit = calc_digit(modulus, position, value);
+    matrix.entries[i] = digit;
+    value -= digit * __power(modulus, position);
+    position--;
+  }
+
+  return matrix;
 }
