@@ -75,6 +75,10 @@ unsigned int num_matrices(unsigned int rows,
   return num;
 }
 
+/*************************************************************
+Caculates the number of entries in a matrix with dimensions
+of rows and columns.
+*************************************************************/
 unsigned int num_entries(unsigned int rows,
                          unsigned int columns) {
   check_matrix_params(rows, columns, 2);
