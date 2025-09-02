@@ -22,7 +22,7 @@ int main(void) {
   free_matrix(&m);
   free_matrix(&n);
 
-  printf("\n\n%u", num_matrices(3, 3, 4));
+  printf("\n\n%u", largest_digit_position(16, 2));
 
   return EXIT_SUCCESS;
 

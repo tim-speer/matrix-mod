@@ -49,5 +49,7 @@ unsigned int inner_product(MatrixMod row, MatrixMod column);
 MatrixMod multiply_matrices(MatrixMod left, MatrixMod right);
 MatrixMod square_matrix(MatrixMod matrix);
 MatrixMod reduce_multiply_matrices(MatrixMod left, MatrixMod right);
+unsigned int largest_digit_position(unsigned int value,
+                                    unsigned int modulus);
 
 #endif

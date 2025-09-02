@@ -204,3 +204,17 @@ MatrixMod reduce_multiply_matrices(MatrixMod left, MatrixMod right) {
   reduce_matrix(product);
   return product;
 }
+
+unsigned int largest_digit_position(unsigned int value, 
+                                    unsigned int modulus) {
+  check_modulus(modulus);
+  unsigned int position = 0;
+  unsigned int power = modulus;
+
+  while (value >= power) {
+    position += 1;
+    power *= modulus;
+  }
+
+  return position;
+}
