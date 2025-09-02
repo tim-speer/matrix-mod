@@ -70,6 +70,12 @@ unsigned int num_matrices(unsigned int rows,
   return (unsigned int)pow(modulus, rows * columns); 
 }
 
+unsigned int num_entries(unsigned int rows,
+                         unsigned int columns) {
+  check_matrix_params(rows, columns, 2);
+  return rows * columns;   
+}
+
 unsigned int *entry_address(MatrixMod matrix,
                             unsigned int row,
                             unsigned int column) {

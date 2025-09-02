@@ -24,6 +24,7 @@ unsigned int matrix_size(MatrixMod matrix);
 unsigned int num_matrices(unsigned int rows, 
                           unsigned int columns, 
                           unsigned int modulus);
+unsigned int num_entries(unsigned int rows, unsigned int columns);
 unsigned int *entry_address(MatrixMod matrix,
                             unsigned int row,
                             unsigned int column);
