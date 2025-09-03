@@ -71,6 +71,21 @@ MatrixList create_empty_matrix_list(unsigned int rows,
   return matrix_list;
 }
 
+MatrixList create_matrix_list(unsigned int rows,
+                              unsigned int columns,
+                              unsigned int modulus) {
+  MatrixList matrix_list = create_empty_matrix_list(rows, 
+                                                    columns,
+                                                    modulus);
+  unsigned int num = num_matrices(rows, columns, modulus);
+
+  for (unsigned int i = 0; i < num; i++) {
+    matrix_list.matrices[i] = gen_matrix(rows, columns, modulus, i);
+  }
+
+  return matrix_list;
+} 
+
 void free_matrix(MatrixMod *matrix) {
   free(matrix->entries);
   matrix->entries = NULL;

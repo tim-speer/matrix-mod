@@ -5,15 +5,14 @@
 int main(void) {
 
   unsigned int num = num_matrices(2, 2, 3);
-  MatrixMod *matrices;
-
+  MatrixList matrix_list = create_matrix_list(2, 2, 3);
+  
   for (unsigned int i = 0; i < num; i++) {
-    matrices[i] = gen_matrix(2, 2, 3, i);
-    print_matrix_info(matrices[i]);
-    free_matrix(&matrices[i]);
+    print_matrix_info(matrix_list.matrices[i]);
+    free_matrix(&matrix_list.matrices[i]);
   }
 
-  print_matrix_info(matrices[0]);
+  free(matrix_list.matrices);
 
   return EXIT_SUCCESS;
 }
