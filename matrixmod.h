@@ -33,6 +33,7 @@ MatrixList create_matrix_list(unsigned int rows,
                               unsigned int columns,
                               unsigned int modulus);
 void free_matrix(MatrixMod *matrix);
+void free_matrix_list(MatrixList *matrix_list);
 unsigned int matrix_size(MatrixMod matrix);
 unsigned int num_matrices(unsigned int rows, 
                           unsigned int columns, 

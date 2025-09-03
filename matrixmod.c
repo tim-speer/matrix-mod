@@ -91,6 +91,19 @@ void free_matrix(MatrixMod *matrix) {
   matrix->entries = NULL;
 }
 
+void free_matrix_list(MatrixList *matrix_list) {
+  unsigned int num = num_matrices(matrix_list->rows, 
+                                  matrix_list->columns,
+                                  matrix_list->modulus);
+
+  for (unsigned int i = 0; i < num; i++) {
+    free_matrix(&matrix_list->matrices[i]);
+  }
+
+  free(matrix_list->matrices);
+  matrix_list->matrices = NULL;
+}
+
 unsigned int matrix_size(MatrixMod matrix) {
   return matrix.rows * matrix.columns;
 }
