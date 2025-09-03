@@ -8,6 +8,13 @@ typedef struct {
                  unsigned int *entries;
                } MatrixMod;
 
+typedef struct {
+                 unsigned int rows;
+                 unsigned int columns;
+                 unsigned int modulus;
+                 MatrixMod *matrices;
+               } MatrixList;
+
 MatrixMod create_zero_matrix(unsigned int rows,
                              unsigned int columns,
                              unsigned int modulus);
