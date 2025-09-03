@@ -26,9 +26,9 @@ MatrixMod create_reduced_matrix(unsigned int rows,
                                 unsigned int columns,
                                 unsigned int modulus,
                                 unsigned int entries[rows * columns]);
-MatrixList create_zero_matrix_list(unsigned int rows,
-                                   unsigned int columns,
-                                   unsigned int modulus);
+MatrixList create_empty_matrix_list(unsigned int rows,
+                                    unsigned int columns,
+                                    unsigned int modulus);
 void free_matrix(MatrixMod *matrix);
 unsigned int matrix_size(MatrixMod matrix);
 unsigned int num_matrices(unsigned int rows, 

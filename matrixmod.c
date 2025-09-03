@@ -62,6 +62,15 @@ MatrixMod create_reduced_matrix(unsigned int rows,
   return matrix;
 }
 
+MatrixList create_empty_matrix_list(unsigned int rows,
+                                    unsigned int columns,
+                                    unsigned int modulus) {
+
+  MatrixMod *matrices = __alloc_matrices(rows, columns, modulus);
+  MatrixList matrix_list = {rows, columns, modulus, matrices};
+  return matrix_list;
+}
+
 void free_matrix(MatrixMod *matrix) {
   free(matrix->entries);
   matrix->entries = NULL;
