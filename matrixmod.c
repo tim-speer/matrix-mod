@@ -19,6 +19,22 @@ unsigned int *__alloc_matrix(unsigned int rows, unsigned int columns) {
   return entries;
 }
 
+MatrixMod *__alloc_matrices(unsigned int rows, 
+                            unsigned int columns, 
+                            unsigned int modulus) {
+  check_matrix_params(rows, columns, modulus);
+  
+  unsigned int num = num_matrices(rows, columns, modulus);
+  MatrixMod *matrices = calloc(num, sizeof(MatrixMod));
+
+  if (matrices == NULL) {
+    printf("Could not allocate memory for matrices.");
+    exit(EXIT_FAILURE);
+  }
+
+  return matrices;
+}
+
 MatrixMod create_zero_matrix(unsigned int rows,
                              unsigned int columns,      
                              unsigned int modulus) {
