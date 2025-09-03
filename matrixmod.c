@@ -209,6 +209,28 @@ void print_matrix_info(MatrixMod matrix) {
   print_matrix(matrix);
 }
 
+void print_matrix_list(MatrixList matrix_list) {
+  unsigned int num = num_matrices(matrix_list.rows,
+                                  matrix_list.columns,
+                                  matrix_list.modulus);
+
+  for (unsigned int i = 0; i < num; i++) {
+    print_matrix(matrix_list.matrices[i]);
+    printf("\n");
+  }
+}
+
+void print_matrix_list_info(MatrixList matrix_list) {
+  unsigned int num = num_matrices(matrix_list.rows,
+                                  matrix_list.columns,
+                                  matrix_list.modulus);
+  printf("rows = %u\n", matrix_list.rows);
+  printf("columns = %u\n", matrix_list.columns);
+  printf("modulus = %u\n", matrix_list.modulus);
+  printf("num = %u\n", num);
+  print_matrix_list(matrix_list);
+}
+
 void reduce_matrix_entry(MatrixMod matrix, 
                          unsigned int row, 
                          unsigned int column) {

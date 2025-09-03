@@ -55,6 +55,8 @@ void set_matrix_entries(MatrixMod matrix,
                         unsigned int entries[matrix.rows * matrix.columns]);
 void print_matrix(MatrixMod matrix);
 void print_matrix_info(MatrixMod matrix);
+void print_matrix_list(MatrixList matrix_list);
+void print_matrix_list_info(MatrixList matrix_list);
 void reduce_matrix_entry(MatrixMod matrix,
                          unsigned int row,
                          unsigned int column);

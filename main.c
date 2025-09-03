@@ -6,6 +6,7 @@ int main(void) {
 
   unsigned int num = num_matrices(2, 2, 3);
   MatrixList matrix_list = create_matrix_list(2, 2, 3);
+  print_matrix_list_info(matrix_list);
   free_matrix_list(&matrix_list);
   return EXIT_SUCCESS;
 }
