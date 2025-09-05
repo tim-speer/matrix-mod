@@ -50,6 +50,7 @@ MatrixMod create_matrix(unsigned int rows,
                         unsigned int entries[rows * columns]) {
   MatrixMod matrix = create_zero_matrix(rows, columns, modulus);
   set_matrix_entries(matrix, entries);
+  reduce_matrix(matrix);
   return matrix;
 }
 
@@ -342,4 +343,23 @@ MatrixMod identity_matrix(unsigned int dim, unsigned int modulus) {
   }
 
   return matrix;
+}
+
+int matrices_equal(MatrixMod left, MatrixMod right) {
+  if (left.rows != right.rows || left.columns != right.columns ||
+      left.modulus != right.modulus) {
+    return 0;
+  }
+
+  unsigned int num = num_entries(left.rows, left.columns);
+  reduce_matrix(left);
+  reduce_matrix(right);
+
+  for (unsigned int i = 0; i < num; i++) {
+    if (left.entries[i] != right.entries[i]) {
+      return 0;
+    }
+  }
+
+  return 1;
 }
