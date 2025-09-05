@@ -363,3 +363,11 @@ int matrices_equal(MatrixMod left, MatrixMod right) {
 
   return 1;
 }
+
+int is_idempotent(MatrixMod matrix) {
+  if (matrices_equal(matrix, square_matrix(matrix))) {
+    return 1;
+  }
+
+  return 0;
+}
