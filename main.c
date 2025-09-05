@@ -4,9 +4,8 @@
 
 int main(void) {
 
-  unsigned int num = num_matrices(2, 2, 3);
-  MatrixList matrix_list = create_matrix_list(2, 2, 3);
-  print_matrix_list_info(matrix_list);
-  free_matrix_list(&matrix_list);
+  MatrixMod iden = identity_matrix(4, 2);
+  print_matrix_info(iden);
+  free_matrix(&iden);
   return EXIT_SUCCESS;
 }

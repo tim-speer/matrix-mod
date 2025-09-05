@@ -327,3 +327,19 @@ MatrixMod gen_matrix(unsigned int rows,
 
   return matrix;
 }
+
+MatrixMod identity_matrix(unsigned int dim, unsigned int modulus) {
+  MatrixMod matrix = create_zero_matrix(dim, dim, modulus);
+  for (unsigned int i = 1; i <= dim; i++) {
+    for (unsigned int j = 1; j <= dim; j++) {
+      unsigned int *entry_p = entry_address(matrix, i, j);
+      if (i == j) {
+        *(entry_p) = 1;
+      } else {
+        *(entry_p) = 0;
+      }  
+    }
+  }
+
+  return matrix;
+}
