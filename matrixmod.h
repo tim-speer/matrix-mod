@@ -74,5 +74,6 @@ MatrixMod gen_matrix(unsigned int rows,
                      unsigned int value);
 MatrixMod identity_matrix(unsigned int dim, unsigned int modulus);
 MatrixMod add_matrices(MatrixMod left, MatrixMod right);
+MatrixMod power_matrix(MatrixMod matrix, unsigned int power);
 
 #endif

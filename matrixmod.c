@@ -360,3 +360,16 @@ MatrixMod add_matrices(MatrixMod left, MatrixMod right) {
 
   return sum;
 }
+
+MatrixMod power_matrix(MatrixMod matrix, unsigned int power) {
+  check_positive(power);
+  MatrixMod product = matrix;
+  for (unsigned int i = 2; i <= power; i++) {
+    MatrixMod old = product;
+    product = multiply_matrices(product, matrix);
+    if (i > 2) {
+      free_matrix(&old);
+    }  
+  }
+  return product;
+}

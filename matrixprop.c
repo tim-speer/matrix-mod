@@ -143,24 +143,30 @@ void __n_tor_decomp(MatrixList matrix_list, MatrixProp *props, unsigned int i, u
   free_matrix(&sum);
 }
 
-void __n_tor_unit(MatrixList matrix_list, MatrixProp *props, unsigned int i) {
+void __n_tor_unit(MatrixList matrix_list, MatrixProp *props, unsigned int i, int n) {
   unsigned int num = num_matrices(matrix_list.rows,
                                   matrix_list.columns,
                                   matrix_list.modulus);
   for (unsigned int j = 0; j < num; j++) {
     if (props[j].unit == 1) {
-      __n_tor_decomp(matrix_list, props, i, j);
+      MatrixMod prod = power_matrix(matrix_list.matrices[j], n);
+      MatrixMod id = identity_matrix(matrix_list.rows, matrix_list.modulus);
+      if (matrices_equal(prod, id) == 1) {
+        __n_tor_decomp(matrix_list, props, i, j);
+      }
+      free_matrix(&prod);
+      free_matrix(&id);
     }
   }
 }
 
-void __n_tor_idem(MatrixList matrix_list, MatrixProp *props) {
+void __n_tor_idem(MatrixList matrix_list, MatrixProp *props, int n) {
   unsigned int num = num_matrices(matrix_list.rows,
                                   matrix_list.columns,
                                   matrix_list.modulus);
   for (unsigned int i = 0; i < num; i++) {
     if (props[i].idempotent == 1) {
-      __n_tor_unit(matrix_list, props, i);
+      __n_tor_unit(matrix_list, props, i, n);
     }
   }
 }
@@ -171,7 +177,7 @@ int calc_n_torsion_clean(MatrixList matrix_list,
   unsigned int num = num_matrices(matrix_list.rows,
                                   matrix_list.columns,
                                   matrix_list.modulus);
-  __n_tor_idem(matrix_list, props);
+  __n_tor_idem(matrix_list, props, n);
 
   for (unsigned int i = 0; i < num; i++) {
     if (props[i].n_torsion_clean != 1) {
@@ -180,4 +186,10 @@ int calc_n_torsion_clean(MatrixList matrix_list,
   }
 
   return 1;
+}
+
+int calc_strongly_n_torsion_clean(MatrixList matrix_list,
+                                  MatrixProp *props,
+                                  int n) {
+  return 0;
 }

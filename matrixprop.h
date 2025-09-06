@@ -24,6 +24,9 @@ void print_matrix_prop(MatrixProp prop);
 int calc_n_torsion_clean(MatrixList matrix_list, 
                          MatrixProp *props, 
                          int n);
+int calc_strongly_n_torsion_clean(MatrixList matrix_list,
+                                  MatrixProp *props,
+                                  int n);
 
 #endif
 

@@ -56,4 +56,12 @@ void calc_matrix_ring_props(MatrixRing *matrix_ring) {
     matrix_ring->n_torsion_checked++; 
   }
 
+  if (matrix_ring->strongly_n_torsion_clean == -1 ||
+      matrix_ring->strongly_n_torsion_clean == 0) {
+    matrix_ring->strongly_n_torsion_clean = calc_strongly_n_torsion_clean(matrix_ring->matrix_list,
+                                                                          matrix_ring->props,
+                                                                          matrix_ring->strongly_n_torsion_checked + 1);
+    matrix_ring->strongly_n_torsion_checked++;  
+  }
+
 }
