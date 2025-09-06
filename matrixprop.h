@@ -6,8 +6,8 @@
 typedef struct {
                  int idempotent;
                  int unit; 
-                 int n_torsion_clean_decomp;
-                 int strongly_n_torsion_clean_decomp;
+                 int n_torsion_clean;
+                 int strongly_n_torsion_clean;
                } MatrixProp;
 
 MatrixProp create_matrix_prop(void);
@@ -21,6 +21,9 @@ int is_idempotent(MatrixMod matrix);
 void calc_units(MatrixList matrix_list, MatrixProp *props);
 int is_unit(MatrixMod matrix, MatrixList matrix_list);
 void print_matrix_prop(MatrixProp prop);
+int calc_n_torsion_clean(MatrixList matrix_list, 
+                         MatrixProp *props, 
+                         int n);
 
 #endif
 

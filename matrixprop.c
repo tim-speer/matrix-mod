@@ -127,8 +127,57 @@ int is_unit(MatrixMod matrix, MatrixList matrix_list) {
 void print_matrix_prop(MatrixProp prop) {
   printf("Idempotent = %d\n", prop.idempotent);
   printf("Unit = %d\n", prop.unit);
-  printf("N-Torsion Clean Decomposition = %d\n", prop.n_torsion_clean_decomp);
-  printf("Strongly N-Torsion Clean Decomposition = %d\n", prop.strongly_n_torsion_clean_decomp);
+  printf("N-Torsion Clean Decomposition = %d\n", prop.n_torsion_clean);
+  printf("Strongly N-Torsion Clean Decomposition = %d\n", prop.strongly_n_torsion_clean);
 }
 
+void __n_tor_decomp(MatrixList matrix_list, MatrixProp *props, unsigned int i, unsigned int j) {
+  MatrixMod sum = add_matrices(matrix_list.matrices[i], matrix_list.matrices[j]);
+  unsigned int num = num_matrices(matrix_list.rows, matrix_list.columns, matrix_list.modulus);
+  for (unsigned int k = 0; k < num; k++) {
+    if (matrices_equal(sum, matrix_list.matrices[k])) {
+      props[k].n_torsion_clean = 1;
+      break;
+    }
+  }
+  free_matrix(&sum);
+}
 
+void __n_tor_unit(MatrixList matrix_list, MatrixProp *props, unsigned int i) {
+  unsigned int num = num_matrices(matrix_list.rows,
+                                  matrix_list.columns,
+                                  matrix_list.modulus);
+  for (unsigned int j = 0; j < num; j++) {
+    if (props[j].unit == 1) {
+      __n_tor_decomp(matrix_list, props, i, j);
+    }
+  }
+}
+
+void __n_tor_idem(MatrixList matrix_list, MatrixProp *props) {
+  unsigned int num = num_matrices(matrix_list.rows,
+                                  matrix_list.columns,
+                                  matrix_list.modulus);
+  for (unsigned int i = 0; i < num; i++) {
+    if (props[i].idempotent == 1) {
+      __n_tor_unit(matrix_list, props, i);
+    }
+  }
+}
+
+int calc_n_torsion_clean(MatrixList matrix_list, 
+                         MatrixProp *props, 
+                         int n) {
+  unsigned int num = num_matrices(matrix_list.rows,
+                                  matrix_list.columns,
+                                  matrix_list.modulus);
+  __n_tor_idem(matrix_list, props);
+
+  for (unsigned int i = 0; i < num; i++) {
+    if (props[i].n_torsion_clean != 1) {
+      return 0;
+    }
+  }
+
+  return 1;
+}
