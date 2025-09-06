@@ -66,3 +66,10 @@ void check_is_square(MatrixMod matrix) {
     exit(EXIT_FAILURE);
   }
 }
+
+void check_add_dim(MatrixMod left, MatrixMod right) {
+  if (left.rows != right.rows || left.columns != right.columns) {
+    printf("Error: Can only add matrices of same size");
+    exit(EXIT_FAILURE);
+  }
+}

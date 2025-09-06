@@ -344,3 +344,19 @@ MatrixMod identity_matrix(unsigned int dim, unsigned int modulus) {
 
   return matrix;
 }
+
+MatrixMod add_matrices(MatrixMod left, MatrixMod right) {
+  check_add_dim(left, right);
+  MatrixMod sum = create_zero_matrix(left.rows,
+                                     left.columns,
+                                     left.modulus);
+  unsigned int num = num_entries(left.rows, left.columns);
+
+  for (unsigned int i = 0; i < num; i++) {
+    sum.entries[i] = left.entries[i] + right.entries[i];
+  }
+
+  reduce_matrix(sum);
+
+  return sum;
+}

@@ -73,5 +73,6 @@ MatrixMod gen_matrix(unsigned int rows,
                      unsigned int modulus,
                      unsigned int value);
 MatrixMod identity_matrix(unsigned int dim, unsigned int modulus);
+MatrixMod add_matrices(MatrixMod left, MatrixMod right);
 
 #endif
