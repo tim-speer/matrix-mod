@@ -51,3 +51,18 @@ void check_multiply_dim(MatrixMod left, MatrixMod right) {
     exit(EXIT_FAILURE);
   }
 }
+
+void check_matrices_equal(MatrixMod left, MatrixMod right) {
+  if (left.rows != right.rows || left.columns != right.columns ||
+      left.modulus != right.modulus) {
+    printf("Error: Invalid dimensions for matrices equal check");
+    exit(EXIT_FAILURE);
+  }
+}
+
+void check_is_square(MatrixMod matrix) {
+  if (matrix.rows != matrix.columns) {
+    printf("Error: Need a square matrix");
+    exit(EXIT_FAILURE);
+  }
+}

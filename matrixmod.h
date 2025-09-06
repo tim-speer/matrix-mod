@@ -73,7 +73,5 @@ MatrixMod gen_matrix(unsigned int rows,
                      unsigned int modulus,
                      unsigned int value);
 MatrixMod identity_matrix(unsigned int dim, unsigned int modulus);
-int matrices_equal(MatrixMod left, MatrixMod right);
-int is_idempotent(MatrixMod matrix);
 
 #endif

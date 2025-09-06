@@ -14,5 +14,7 @@ void check_matrix_params(unsigned int rows,
                          unsigned int columns,
                          unsigned int modulus);
 void check_multiply_dim(MatrixMod left, MatrixMod right);
+void check_matrices_equal(MatrixMod left, MatrixMod right);
+void check_is_square(MatrixMod matrix);
 
 #endif
