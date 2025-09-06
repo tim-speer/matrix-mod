@@ -19,7 +19,7 @@ MatrixProp *__alloc_matrix_prop_list(unsigned int rows,
 }
 
 MatrixProp create_matrix_prop(void) {
-  MatrixProp prop = { -1, -1, -1, -1, -1, -1};
+  MatrixProp prop = { -1, -1, -1, -1};
   return prop;
 }
 
@@ -127,8 +127,6 @@ int is_unit(MatrixMod matrix, MatrixList matrix_list) {
 void print_matrix_prop(MatrixProp prop) {
   printf("Idempotent = %d\n", prop.idempotent);
   printf("Unit = %d\n", prop.unit);
-  printf("Clean Decomposition = %d\n", prop.clean_decomp);
-  printf("Strongly Clean Decomposition = %d\n", prop.strongly_clean_decomp);
   printf("N-Torsion Clean Decomposition = %d\n", prop.n_torsion_clean_decomp);
   printf("Strongly N-Torsion Clean Decomposition = %d\n", prop.strongly_n_torsion_clean_decomp);
 }
