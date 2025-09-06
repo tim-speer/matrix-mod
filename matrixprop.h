@@ -6,6 +6,10 @@
 typedef struct {
                  int idempotent;
                  int unit; 
+                 int clean_decomp;
+                 int strongly_clean_decomp;
+                 int n_torsion_clean_decomp;
+                 int strongly_n_torsion_clean_decomp;
                } MatrixProp;
 
 MatrixProp create_matrix_prop(void);

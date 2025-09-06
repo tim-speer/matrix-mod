@@ -12,6 +12,7 @@ int main(void) {
   calc_units(matrix_list, props);
 
   for(unsigned int i = 0; i < num; i++) {
+    print_matrix(matrix_list.matrices[i]);
     print_matrix_prop(props[i]);
   }
 
