@@ -1,5 +1,11 @@
+#include <stdio.h>
 #include "matrixprop.h"
 #include "checks.h"
+
+MatrixProp create_matrix_prop(void) {
+  MatrixProp prop = { -1, -1 };
+  return prop;
+}
 
 int matrices_equal(MatrixMod left, MatrixMod right) {
   check_matrices_equal(left, right);
@@ -53,4 +59,9 @@ int is_unit(MatrixMod matrix, MatrixList matrix_list) {
   }
 
   return 0;
+}
+
+void print_matrix_prop(MatrixProp prop) {
+  printf("Idempotent = %d\n", prop.idempotent);
+  printf("Unit = %d\n", prop.unit);
 }
