@@ -1,10 +1,44 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "matrixprop.h"
 #include "checks.h"
+
+MatrixProp *__alloc_matrix_prop_list(unsigned int rows,
+                                     unsigned int columns,
+                                     unsigned int modulus) {
+  check_matrix_params(rows, columns, modulus);
+  unsigned int num = num_matrices(rows, columns, modulus);
+  MatrixProp *props = calloc(num, sizeof(MatrixProp));
+
+  if (props == NULL) {
+    printf("Could not allocate memory for MatrixProp list");
+    exit(EXIT_FAILURE);
+  }
+
+  return props;
+}
 
 MatrixProp create_matrix_prop(void) {
   MatrixProp prop = { -1, -1 };
   return prop;
+}
+
+MatrixProp *create_matrix_prop_list(unsigned int rows,
+                                     unsigned int columns,
+                                     unsigned int modulus) {
+  MatrixProp *props = __alloc_matrix_prop_list(rows, columns, modulus);
+  unsigned int num = num_matrices(rows, columns, modulus);
+
+  for (unsigned int i = 0; i < num; i++) {
+    props[i] = create_matrix_prop();
+  }
+
+  return props;
+}
+
+void free_matrix_prop_list(MatrixProp *props) {
+  free(props);
+  props = NULL;
 }
 
 int matrices_equal(MatrixMod left, MatrixMod right) {
@@ -20,6 +54,21 @@ int matrices_equal(MatrixMod left, MatrixMod right) {
   }
 
   return 1;
+}
+
+void calc_idempotents(MatrixList matrix_list, MatrixProp *props) {
+  unsigned int num = num_matrices(matrix_list.rows,
+                                  matrix_list.columns,
+                                  matrix_list.modulus);
+
+  for (unsigned int i = 0; i < num; i++) {
+    if (is_idempotent(matrix_list.matrices[i])) {
+      props[i].idempotent = 1; 
+    }
+    else {
+      props[i]. idempotent = 0;
+    }
+  }
 }
 
 int is_idempotent(MatrixMod matrix) {
