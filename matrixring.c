@@ -20,7 +20,7 @@ void free_matrix_ring(MatrixRing *matrix_ring) {
 }
 
 void print_matrix_ring(MatrixRing matrix_ring) {
-  printf("num_mat = %u\n", matrix_ring.num_mat);
+  printf("\nnum_mat = %u\n", matrix_ring.num_mat);
   printf("idempotents = %d\n", matrix_ring.idempotents);
   printf("units = %d\n", matrix_ring.units);
   printf("N-Torsion Clean = %d\n", matrix_ring.n_torsion_clean);
@@ -31,11 +31,11 @@ void print_matrix_ring(MatrixRing matrix_ring) {
   printf("columns = %u\n", matrix_ring.matrix_list.columns);
   printf("modulus = %u\n\n", matrix_ring.matrix_list.modulus);
 
-  for (unsigned int i = 0; i < matrix_ring.num_mat; i++) {
+  /*for (unsigned int i = 0; i < matrix_ring.num_mat; i++) {
     print_matrix(matrix_ring.matrix_list.matrices[i]);
     print_matrix_prop(matrix_ring.props[i]);
     printf("\n");
-  }
+  }*/
 }
 
 void calc_matrix_ring_props(MatrixRing *matrix_ring) {
@@ -64,4 +64,10 @@ void calc_matrix_ring_props(MatrixRing *matrix_ring) {
     matrix_ring->strongly_n_torsion_checked++;  
   }
 
+}
+
+void iter_calc_matrix_ring_props(MatrixRing *matrix_ring, unsigned int iters) {
+  for (unsigned int i = 0; i < iters; i++) {
+    calc_matrix_ring_props(matrix_ring);
+  }
 }

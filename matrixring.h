@@ -21,5 +21,6 @@ MatrixRing create_matrix_ring(unsigned int dim,
 void free_matrix_ring(MatrixRing *matrix_ring);
 void print_matrix_ring(MatrixRing matrix_ring);
 void calc_matrix_ring_props(MatrixRing *matrix_ring);
+void iter_calc_matrix_ring_props(MatrixRing *matrix_ring, unsigned int iters);
 
 #endif

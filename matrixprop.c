@@ -57,11 +57,15 @@ int matrices_equal(MatrixMod left, MatrixMod right) {
 }
 
 void calc_idempotents(MatrixList matrix_list, MatrixProp *props) {
+  printf("\nCalculating Idempotents\n");
   unsigned int num = num_matrices(matrix_list.rows,
                                   matrix_list.columns,
                                   matrix_list.modulus);
 
   for (unsigned int i = 0; i < num; i++) {
+    if ((i + 1) % 500  == 0) {
+      printf("%u/%u\n", i + 1, num);
+    }
     if (is_idempotent(matrix_list.matrices[i])) {
       props[i].idempotent = 1; 
     }
@@ -99,11 +103,15 @@ int is_inverse(MatrixMod matrix, MatrixMod inverse) {
 }
 
 void calc_units(MatrixList matrix_list, MatrixProp *props) {
+  printf("\nCalculating Units\n");
   unsigned int num = num_matrices(matrix_list.rows,
                                   matrix_list.columns,
                                   matrix_list.modulus);
 
   for (unsigned int i = 0; i < num; i++) {
+    if ((i + 1) % 500 == 0) {
+      printf("%u/%u\n", i + 1, num);
+    }
     if (is_unit(matrix_list.matrices[i], matrix_list)) {
       props[i].unit = 1;
     } else {
@@ -171,25 +179,94 @@ void __n_tor_idem(MatrixList matrix_list, MatrixProp *props, int n) {
   }
 }
 
-int calc_n_torsion_clean(MatrixList matrix_list, 
-                         MatrixProp *props, 
-                         int n) {
+void __strg_n_tor_decomp(MatrixList matrix_list, MatrixProp *props, unsigned int i, unsigned int j) {
+  MatrixMod sum = add_matrices(matrix_list.matrices[i], matrix_list.matrices[j]);
+  unsigned int num = num_matrices(matrix_list.rows, matrix_list.columns, matrix_list.modulus);
+  for (unsigned int k = 0; k < num; k++) {
+    if (matrices_equal(sum, matrix_list.matrices[k])) {
+      props[k].strongly_n_torsion_clean = 1;
+      break;
+    }
+  }
+  free_matrix(&sum);
+}
+
+void __strg_n_tor_unit(MatrixList matrix_list, MatrixProp *props, unsigned int i, int n) {
   unsigned int num = num_matrices(matrix_list.rows,
                                   matrix_list.columns,
                                   matrix_list.modulus);
+  for (unsigned int j = 0; j < num; j++) {
+    if (props[j].unit == 1) {
+      MatrixMod prod = power_matrix(matrix_list.matrices[j], n);
+      MatrixMod id = identity_matrix(matrix_list.rows, matrix_list.modulus);
+      MatrixMod left = multiply_matrices(matrix_list.matrices[i], matrix_list.matrices[j]);
+      MatrixMod right = multiply_matrices(matrix_list.matrices[j], matrix_list.matrices[i]);
+ 
+      if (matrices_equal(prod, id) == 1 && matrices_equal(left, right)) {
+        __strg_n_tor_decomp(matrix_list, props, i, j);
+      }
+
+      free_matrix(&prod);
+      free_matrix(&id);
+      free_matrix(&left);
+      free_matrix(&right);
+    }
+  }
+}
+
+void __strg_n_tor_idem(MatrixList matrix_list, MatrixProp *props, int n) {
+  unsigned int num = num_matrices(matrix_list.rows,
+                                  matrix_list.columns,
+                                  matrix_list.modulus);
+  for (unsigned int i = 0; i < num; i++) {
+    if (props[i].idempotent == 1) {
+      __strg_n_tor_unit(matrix_list, props, i, n);
+    }
+  }
+}
+
+int calc_n_torsion_clean(MatrixList matrix_list, 
+                         MatrixProp *props, 
+                         int n) {
+  printf("\nCalculating N-Torsion Clean Decompositions n = %d", n);
+  unsigned int num = num_matrices(matrix_list.rows,
+                                  matrix_list.columns,
+                                  matrix_list.modulus);
+  for (unsigned int i = 0; i < num; i++) {
+    props[i].n_torsion_clean = 0;
+  }
   __n_tor_idem(matrix_list, props, n);
 
   for (unsigned int i = 0; i < num; i++) {
     if (props[i].n_torsion_clean != 1) {
+      printf("\nFailure");
       return 0;
     }
   }
-
+  printf("\n********Success********");
   return 1;
 }
 
 int calc_strongly_n_torsion_clean(MatrixList matrix_list,
                                   MatrixProp *props,
                                   int n) {
-  return 0;
+  printf("\nCalculating Strongly N-Torsion Clean Decompositions n = %d", n);
+  unsigned int num = num_matrices(matrix_list.rows,
+                                  matrix_list.columns,
+                                  matrix_list.modulus);
+  for (unsigned int i = 0; i < num; i++) {
+    props[i].strongly_n_torsion_clean = 0;
+  }
+
+  __strg_n_tor_idem(matrix_list, props, n);
+
+  for (unsigned int i = 0; i < num; i++) {
+    if (props[i].strongly_n_torsion_clean != 1) {
+      printf("\nFailure");
+      return 0;
+    }
+  }
+
+  printf("\n********Success********");
+  return 1;
 }
