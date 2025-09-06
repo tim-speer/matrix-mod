@@ -9,6 +9,7 @@ int main(void) {
   MatrixProp *props = create_matrix_prop_list(2, 2, 2);
   unsigned int num = num_matrices(2, 2, 2);
   calc_idempotents(matrix_list, props);
+  calc_units(matrix_list, props);
 
   for(unsigned int i = 0; i < num; i++) {
     print_matrix_prop(props[i]);

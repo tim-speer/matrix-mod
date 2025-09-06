@@ -98,6 +98,20 @@ int is_inverse(MatrixMod matrix, MatrixMod inverse) {
   return 0; 
 }
 
+void calc_units(MatrixList matrix_list, MatrixProp *props) {
+  unsigned int num = num_matrices(matrix_list.rows,
+                                  matrix_list.columns,
+                                  matrix_list.modulus);
+
+  for (unsigned int i = 0; i < num; i++) {
+    if (is_unit(matrix_list.matrices[i], matrix_list)) {
+      props[i].unit = 1;
+    } else {
+      props[i].unit = 0;
+    }
+  }
+}
+
 int is_unit(MatrixMod matrix, MatrixList matrix_list) {
   unsigned int num = num_matrices(matrix.rows, matrix.columns, matrix.modulus);
   
