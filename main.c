@@ -4,6 +4,19 @@
 #include "matrixprop.h"
 #include "matrixring.h"
 
+unsigned int get_matrix_ring_modulus(void) {
+  unsigned int modulus;
+
+  printf("\nEnter Matrix Modulus: ");
+  int n = scanf("%u", &modulus);
+  if (n == 0 || modulus < 2) {
+    printf("Failed to load matrix ring. Modulus should be at least 2.\n");
+    modulus = 0;
+  }
+
+  return modulus;
+}
+
 unsigned int get_matrix_ring_dim(void) {
   unsigned int dim;
   
@@ -23,6 +36,7 @@ MatrixRing load_matrix_ring(void) {
   printf("\nLoading Matrix Ring");
   printf("\n*******************");
   unsigned int dim = get_matrix_ring_dim(); 
+  unsigned int modulus = get_matrix_ring_modulus();
 
   return matrix_ring;
 }
