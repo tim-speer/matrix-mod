@@ -30,6 +30,19 @@ unsigned int get_matrix_ring_dim(void) {
   return dim;
 }
 
+unsigned int get_matrix_ring_iter(void) {
+  unsigned int iter;
+
+  printf("\nEnter Number of Iterations: ");
+  int n = scanf("%u", &iter);
+  if (n != 1 || iter < 1) {
+    printf("Failed to calculate matrix ring properties. Iterations should be at least 1.\n");
+    iter = 0;
+  }
+
+  return iter;
+}
+
 MatrixRing load_matrix_ring(void) {
   printf("\n*******************");
   printf("\nLoading Matrix Ring");
@@ -52,6 +65,17 @@ MatrixRing load_matrix_ring(void) {
   return matrix_ring;
 }
 
+void iter_matrix_ring(MatrixRing *matrix_ring) {
+  printf("\n**********************************");
+  printf("\nCalculating Matrix Ring Properties");
+  printf("\n**********************************");
+
+  unsigned int iter = get_matrix_ring_iter();
+  if (iter != 0) {
+    iter_calc_matrix_ring_props(matrix_ring, iter);    
+  }
+}
+
 void display_menu(void) {
   char in = '?';
   MatrixRing matrix_ring = create_matrix_ring(2, 2);
@@ -59,6 +83,7 @@ void display_menu(void) {
   while(in != 'q') {
     printf("\n********************");
     printf("\n(l) Load Matrix Ring");
+    printf("\n(c) Calculate Matrix Ring Properties");
     printf("\n(p) Print Matrix Ring");
     printf("\n(q) Quit");
     printf("\n********************");
@@ -66,7 +91,10 @@ void display_menu(void) {
     scanf("%s", &in);
     switch(in) {
       case 'l':
+        free_matrix_ring(&matrix_ring);
         matrix_ring = load_matrix_ring();
+      case 'c':
+        iter_matrix_ring(&matrix_ring);
       case 'p':
         print_matrix_ring(matrix_ring);      
       case 'q':
@@ -75,6 +103,9 @@ void display_menu(void) {
         printf("!!!Invalid Choice!!!\n");
     }
   }
+
+  free_matrix_ring(&matrix_ring);
+
 }
 
 int main(void) {
