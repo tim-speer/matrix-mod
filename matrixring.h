@@ -7,7 +7,9 @@
 typedef struct {
                  unsigned int num_mat;
                  int idempotents;
+                 int num_idempotents;
                  int units;
+                 int num_units;
                  int n_torsion_clean;
                  int n_torsion_checked;
                  int strongly_n_torsion_clean;

@@ -56,23 +56,28 @@ int matrices_equal(MatrixMod left, MatrixMod right) {
   return 1;
 }
 
-void calc_idempotents(MatrixList matrix_list, MatrixProp *props) {
+int calc_idempotents(MatrixList matrix_list, MatrixProp *props) {
   printf("\nCalculating Idempotents\n");
   unsigned int num = num_matrices(matrix_list.rows,
                                   matrix_list.columns,
                                   matrix_list.modulus);
+  int num_idempotents = 0;
+
 
   for (unsigned int i = 0; i < num; i++) {
     if ((i + 1) % 500  == 0) {
       printf("%u/%u\n", i + 1, num);
     }
     if (is_idempotent(matrix_list.matrices[i])) {
-      props[i].idempotent = 1; 
+      props[i].idempotent = 1;
+      num_idempotents++; 
     }
     else {
       props[i]. idempotent = 0;
     }
   }
+
+  return num_idempotents;
 }
 
 int is_idempotent(MatrixMod matrix) {
@@ -102,11 +107,13 @@ int is_inverse(MatrixMod matrix, MatrixMod inverse) {
   return 0; 
 }
 
-void calc_units(MatrixList matrix_list, MatrixProp *props) {
+int calc_units(MatrixList matrix_list, MatrixProp *props) {
   printf("\nCalculating Units\n");
   unsigned int num = num_matrices(matrix_list.rows,
                                   matrix_list.columns,
                                   matrix_list.modulus);
+  int num_units = 0;
+
 
   for (unsigned int i = 0; i < num; i++) {
     if ((i + 1) % 500 == 0) {
@@ -114,10 +121,13 @@ void calc_units(MatrixList matrix_list, MatrixProp *props) {
     }
     if (is_unit(matrix_list.matrices[i], matrix_list)) {
       props[i].unit = 1;
+      num_units++;
     } else {
       props[i].unit = 0;
     }
   }
+
+  return num_units;
 }
 
 int is_unit(MatrixMod matrix, MatrixList matrix_list) {

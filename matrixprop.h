@@ -16,9 +16,9 @@ MatrixProp *create_matrix_prop_list(unsigned int rows,
                                     unsigned int modulus);
 void free_matrix_prop_list(MatrixProp *props);
 int matrices_equal(MatrixMod left, MatrixMod right);
-void calc_idempotents(MatrixList matrix_list, MatrixProp *props);
+int calc_idempotents(MatrixList matrix_list, MatrixProp *props);
 int is_idempotent(MatrixMod matrix);
-void calc_units(MatrixList matrix_list, MatrixProp *props);
+int calc_units(MatrixList matrix_list, MatrixProp *props);
 int is_unit(MatrixMod matrix, MatrixList matrix_list);
 void print_matrix_prop(MatrixProp prop);
 int calc_n_torsion_clean(MatrixList matrix_list, 

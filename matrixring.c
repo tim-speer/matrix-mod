@@ -9,7 +9,7 @@ MatrixRing create_matrix_ring(unsigned int dim,
   unsigned int num_mat = num_matrices(dim, dim, modulus);
   MatrixList matrix_list = create_matrix_list(dim, dim, modulus);
   MatrixProp *props = create_matrix_prop_list(dim, dim, modulus); 
-  MatrixRing matrix_ring = { num_mat, -1, -1, -1, 1, -1, 1, matrix_list, props };
+  MatrixRing matrix_ring = { num_mat, -1, -1, -1, -1, -1, 1, -1, 1, matrix_list, props };
   
   return matrix_ring;
 }
@@ -22,7 +22,9 @@ void free_matrix_ring(MatrixRing *matrix_ring) {
 void print_matrix_ring(MatrixRing matrix_ring) {
   printf("\nnum_mat = %u\n", matrix_ring.num_mat);
   printf("idempotents = %d\n", matrix_ring.idempotents);
+  printf("num_idempotents = %d\n", matrix_ring.num_idempotents);
   printf("units = %d\n", matrix_ring.units);
+  printf("num_units = %d\n", matrix_ring.num_units);
   printf("N-Torsion Clean = %d\n", matrix_ring.n_torsion_clean);
   printf("N-Torsion Checked = %d\n", matrix_ring.n_torsion_checked);
   printf("Strongly N-Torsion Clean = %d\n", matrix_ring.strongly_n_torsion_clean);
@@ -31,21 +33,21 @@ void print_matrix_ring(MatrixRing matrix_ring) {
   printf("columns = %u\n", matrix_ring.matrix_list.columns);
   printf("modulus = %u\n\n", matrix_ring.matrix_list.modulus);
 
-  /*for (unsigned int i = 0; i < matrix_ring.num_mat; i++) {
+  /**for (unsigned int i = 0; i < matrix_ring.num_mat; i++) {
     print_matrix(matrix_ring.matrix_list.matrices[i]);
     print_matrix_prop(matrix_ring.props[i]);
     printf("\n");
-  }*/
+  }**/
 }
 
 void calc_matrix_ring_props(MatrixRing *matrix_ring) {
   if (matrix_ring->idempotents == -1) {
-    calc_idempotents(matrix_ring->matrix_list, matrix_ring->props);
+    matrix_ring->num_idempotents = calc_idempotents(matrix_ring->matrix_list, matrix_ring->props);
     matrix_ring->idempotents = 1;
   }  
 
   if (matrix_ring->units == -1) {
-    calc_units(matrix_ring->matrix_list, matrix_ring->props);
+    matrix_ring->num_units = calc_units(matrix_ring->matrix_list, matrix_ring->props);
     matrix_ring->units = 1;
   }
 
