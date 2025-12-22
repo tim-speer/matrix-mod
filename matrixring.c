@@ -32,12 +32,6 @@ void print_matrix_ring(MatrixRing matrix_ring) {
   printf("rows = %u\n", matrix_ring.matrix_list.rows);
   printf("columns = %u\n", matrix_ring.matrix_list.columns);
   printf("modulus = %u\n\n", matrix_ring.matrix_list.modulus);
-
-  /**for (unsigned int i = 0; i < matrix_ring.num_mat; i++) {
-    print_matrix(matrix_ring.matrix_list.matrices[i]);
-    print_matrix_prop(matrix_ring.props[i]);
-    printf("\n");
-  }**/
 }
 
 void calc_matrix_ring_props(MatrixRing *matrix_ring) {
