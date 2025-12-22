@@ -1,3 +1,5 @@
+module IntMod where
+
 data IntMod = IntMod { value :: Int, modulus :: Int } | Invalid
   deriving (Show)
 
