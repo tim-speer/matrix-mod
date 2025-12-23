@@ -1,24 +1,28 @@
 module IntMod where
 
-data IntMod = IntMod { value :: Int, modulus :: Int } | Invalid
+data IntMod = IntMod { value :: Int, modulus :: Int }
   deriving (Show)
 
-instance Num IntMod where
-  x + y | modulus x == modulus y = reduceIntMod $ IntMod (value x + value y) (modulus x)
-        | otherwise = Invalid
-  x * y | modulus x == modulus y = reduceIntMod $ IntMod (value x * value y) (modulus x)
-        | otherwise = Invalid 
-  abs x = reduceIntMod x
-  signum x = Invalid
-  fromInteger x = Invalid
-  negate Invalid = Invalid
-  negate (IntMod value modulus) = reduceIntMod $ IntMod (-value) modulus
+createIntMod :: Int -> Int -> IntMod
+createIntMod value modulus 
+  | modulus >= 2 = IntMod (mod value modulus) modulus
+  | otherwise = IntMod 0 2
 
-instance Eq IntMod where
-  x == y = (modulus x == modulus y) && (mod (value x - value y) (modulus x) == 0) 
+addIntMod :: IntMod -> IntMod -> IntMod
+addIntMod (IntMod vx mx) (IntMod vy my) 
+  | mx == my = createIntMod (vx + vy) mx
+  | otherwise = IntMod 0 2
 
-reduceIntMod :: IntMod -> IntMod
-reduceIntMod Invalid = Invalid
-reduceIntMod (IntMod value modulus) 
-  | modulus >= 2  = IntMod (mod value modulus) modulus
-  | otherwise = Invalid
+mulIntMod :: IntMod -> IntMod -> IntMod
+mulIntMod (IntMod vx mx) (IntMod vy my)
+  | mx == my = createIntMod (vx * vy) mx
+  | otherwise = IntMod 0 2
+
+enumIntMod :: Int -> [IntMod]
+enumIntMod modulus = enumIntMod' modulus 0
+
+enumIntMod' :: Int -> Int -> [IntMod]
+enumIntMod' modulus n 
+  | modulus < 2 = []
+  | n == modulus = []
+  | otherwise = IntMod n modulus : enumIntMod' modulus (n+1) 
