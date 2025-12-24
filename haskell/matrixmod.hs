@@ -55,3 +55,4 @@ innerProduct xs ys
   | length xs == length ys = sum (zipWith (*) xs ys)
   | otherwise = 0
 
+

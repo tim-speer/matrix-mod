@@ -3,6 +3,10 @@ module IntMod where
 data IntMod = IntMod { value :: Int, modulus :: Int }
   deriving (Show)
 
+instance Eq IntMod where
+  IntMod v1 m1 == IntMod v2 m2 = m1 == m2 && 
+                                 (mod (v1-v2) m1) == 0
+
 createIntMod :: Int -> Int -> IntMod
 createIntMod value modulus 
   | modulus >= 2 = IntMod (mod value modulus) modulus
