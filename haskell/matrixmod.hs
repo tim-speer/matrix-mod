@@ -10,14 +10,12 @@ createMatrixMod dim modulus entries
   | dim >= 1 && 
     modulus >= 2 &&
     length entries == dim^2 = MatrixMod dim modulus (map convert entries) 
-  | otherwise = createMatrixMod 2 2 [0, 0, 0, 0]
   where convert = (\v -> createIntMod v modulus)
 
 addMatrixMod :: MatrixMod -> MatrixMod -> MatrixMod
 addMatrixMod left right
   | dim m1 == dim m2 &&
     modulus m1 == modulus m2 = MatrixMod (dim m1) (modulus m1) (zipWith (addIntMod) (entries m1) (entries m2)) 
-  | otherwise = createMatrixMod 0 0 []
   where m1 = ensureValidMatrix left 
         m2 = ensureValidMatrix right
 
@@ -28,7 +26,6 @@ mulMatrixMod left right
   createMatrixMod (dim m1) 
                   (modulus m1) 
                   [innerProduct (row i m1) (column j m2) | i <- [0..dim m1 - 1], j <- [0..dim m1 - 1]]
-  | otherwise = createMatrixMod 0 0 []
   where m1 = ensureValidMatrix left 
         m2 = ensureValidMatrix right
         xs = map modToInt (entries m1)
@@ -53,6 +50,5 @@ ensureValidMatrix matrix =
 innerProduct :: [Int] -> [Int] -> Int
 innerProduct xs ys 
   | length xs == length ys = sum (zipWith (*) xs ys)
-  | otherwise = 0
 
 
