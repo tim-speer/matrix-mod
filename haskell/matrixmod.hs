@@ -51,4 +51,5 @@ innerProduct :: [Int] -> [Int] -> Int
 innerProduct xs ys 
   | length xs == length ys = sum (zipWith (*) xs ys)
 
-
+squareMatrixMod :: MatrixMod -> MatrixMod
+squareMatrixMod matrix = mulMatrixMod matrix matrix
