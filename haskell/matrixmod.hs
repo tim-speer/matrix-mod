@@ -3,7 +3,7 @@ module MatrixMod where
 import IntMod hiding (modulus)
 
 data MatrixMod = MatrixMod { dim :: Int, modulus :: Int, entries :: [IntMod] }
-  deriving (Show)
+  deriving (Show, Eq)
 
 createMatrixMod :: Int -> Int -> [Int] -> MatrixMod
 createMatrixMod dim modulus entries
@@ -53,3 +53,6 @@ innerProduct xs ys
 
 squareMatrixMod :: MatrixMod -> MatrixMod
 squareMatrixMod matrix = mulMatrixMod matrix matrix
+
+isIdempotent :: MatrixMod -> Bool
+isIdempotent matrix = squareMatrixMod matrix == matrix
