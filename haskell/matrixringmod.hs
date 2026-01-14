@@ -16,3 +16,6 @@ entriesList dim modulus = tuples (dim^2) modulus
 createMatrixRingMod :: Int -> Int -> MatrixRingMod
 createMatrixRingMod dim modulus = MatrixRingMod dim modulus matrices
   where matrices = map (createMatrixMod dim modulus) (entriesList dim modulus)
+
+idempotents :: MatrixRingMod -> [MatrixMod]
+idempotents ring = filter isIdempotent (matrices ring)
