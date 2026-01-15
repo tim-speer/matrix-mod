@@ -56,3 +56,20 @@ squareMatrixMod matrix = mulMatrixMod matrix matrix
 
 isIdempotent :: MatrixMod -> Bool
 isIdempotent matrix = squareMatrixMod matrix == matrix
+
+subMatrixEntries :: Int -> Int -> Int -> [Int] -> [Int]
+subMatrixEntries i j dim entries = subMatrixEntries' 0 i j dim entries
+  
+subMatrixEntries' :: Int -> Int -> Int -> Int -> [Int] -> [Int]
+subMatrixEntries' index i j dim [] = []
+subMatrixEntries' index i j dim (e:es) =
+  if row == i || column == j then
+    subMatrixEntries' (index+1) i j dim es 
+  else
+    e : subMatrixEntries' (index+1) i j dim es
+  where row = div index dim 
+        column = mod index dim  
+
+determinant :: MatrixMod -> IntMod
+determinant (MatrixMod dim modulus entries) 
+  | dim == 1 = entries !! 0
