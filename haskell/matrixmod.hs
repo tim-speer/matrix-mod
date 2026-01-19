@@ -57,19 +57,29 @@ squareMatrixMod matrix = mulMatrixMod matrix matrix
 isIdempotent :: MatrixMod -> Bool
 isIdempotent matrix = squareMatrixMod matrix == matrix
 
-subMatrixEntries :: Int -> Int -> Int -> [Int] -> [Int]
-subMatrixEntries i j dim entries = subMatrixEntries' 0 i j dim entries
+subMatrix :: MatrixMod -> Int -> Int -> MatrixMod
+subMatrix (MatrixMod dim modulus entries) i j = MatrixMod (dim-1) modulus (subMatrix' 0 dim entries i j)
   
-subMatrixEntries' :: Int -> Int -> Int -> Int -> [Int] -> [Int]
-subMatrixEntries' index i j dim [] = []
-subMatrixEntries' index i j dim (e:es) =
+subMatrix' :: Int -> Int -> [IntMod] -> Int -> Int -> [IntMod]
+subMatrix' _ _ [] _ _  = []
+subMatrix' index dim (e:es) i j =
   if row == i || column == j then
-    subMatrixEntries' (index+1) i j dim es 
+    subMatrix' (index+1) dim es i j 
   else
-    e : subMatrixEntries' (index+1) i j dim es
+    e : subMatrix' (index+1) dim es i j
   where row = div index dim 
         column = mod index dim  
 
 determinant :: MatrixMod -> IntMod
-determinant (MatrixMod dim modulus entries) 
-  | dim == 1 = entries !! 0
+determinant matrix 
+  | d == 1 = es !! 0
+  | d > 1 = foldr addIntMod (createIntMod 0 m) summands 
+  where d = dim matrix
+        es = entries matrix
+        m = modulus matrix  
+        subMatrices = map (subMatrix matrix 0) [0..d-1]  
+        minors = map determinant subMatrices
+        signs = map ((-1)^) [0..d-1]
+        signsMod = [createIntMod v m | v <- signs]
+        cofactors = zipWith mulIntMod signsMod minors
+        summands = zipWith mulIntMod [IntMod v m | v <- (row 0 matrix)] cofactors
