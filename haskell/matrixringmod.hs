@@ -19,3 +19,6 @@ createMatrixRingMod dim modulus = MatrixRingMod dim modulus matrices
 
 idempotents :: MatrixRingMod -> [MatrixMod]
 idempotents ring = filter isIdempotent (matrices ring)
+
+units :: MatrixRingMod -> [MatrixMod]
+units ring = filter isUnit (matrices ring)

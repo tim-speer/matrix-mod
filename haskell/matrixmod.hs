@@ -83,3 +83,6 @@ determinant matrix
         signsMod = [createIntMod v m | v <- signs]
         cofactors = zipWith mulIntMod signsMod minors
         summands = zipWith mulIntMod [IntMod v m | v <- (row 0 matrix)] cofactors
+
+isUnit :: MatrixMod -> Bool
+isUnit matrix = gcd (modulus matrix) (modToInt (determinant matrix)) == 1
